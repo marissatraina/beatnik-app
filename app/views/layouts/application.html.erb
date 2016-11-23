@@ -4,11 +4,14 @@
     <title>Beatnik</title>
     <%= csrf_meta_tags %>
 
+    <%= stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Droid+Serif:400i' %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div id="wrapper" class="flex-container">
+      <%= yield %>
+    </div>
   </body>
 </html>
