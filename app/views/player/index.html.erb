@@ -15,7 +15,7 @@
 					<th>Playlists</th>
 				</tr>
 				<% @spotify_user.playlists.each do |playlist| %>
-					<tr><td class="user-playlist" id=<%= playlist.uri %> ><%= playlist.name %></td></tr>
+					<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B;<%= playlist.name %></td></tr>
 				<% end %>
 			</table>
 		</div>
