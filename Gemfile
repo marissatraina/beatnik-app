@@ -29,9 +29,17 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# soundcloud ruby gem
+gem 'soundcloud'
+
 group :development, :test do
   gem 'better_errors'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'byebug', platform: :mri
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'faker'
 end
 
 group :development do
