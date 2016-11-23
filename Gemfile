@@ -29,9 +29,17 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use rspotify, omniauth-oauth2, and omniauth-spotify for Spotify implementation
+gem 'rspotify'
+gem 'omniauth-oauth2', '~> 1.3.1'
+gem 'omniauth-spotify'
+
 group :development, :test do
   gem 'better_errors'
   gem 'byebug', platform: :mri
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'faker'
 end
 
 group :development do
