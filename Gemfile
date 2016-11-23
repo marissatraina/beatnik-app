@@ -39,6 +39,8 @@ gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-spotify'
 >>>>>>> Spotify user authentication added.  Reworked views for main app.
 
+gem 'sprockets-rails'
+
 group :development, :test do
   gem 'better_errors'
   gem 'pry'
