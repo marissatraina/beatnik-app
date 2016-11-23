@@ -36,6 +36,8 @@ gem 'omniauth-spotify'
 
 group :development, :test do
   gem 'better_errors'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'rails-controller-testing'
