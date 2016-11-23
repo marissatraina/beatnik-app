@@ -16,6 +16,9 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# RSpotify::authenticate("<your_client_id>", "<your_client_secret>")
+RSpotify::authenticate("7042b0891f7f4341a1998f27090b58a4", "38a444663f5845bc98c8637ef478372a")
+
 module Beatnik
   class Application < Rails::Application
     

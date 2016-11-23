@@ -74,16 +74,24 @@ GEM
     execjs (2.7.0)
     faker (1.6.6)
       i18n (~> 0.5)
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
+=======
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
     ffi (1.9.14)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     hashie (3.4.6)
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
       multipart-post
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
+=======
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -92,6 +100,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jwt (1.5.6)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -109,9 +118,27 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
+=======
+    netrc (0.7.9)
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    oauth2 (1.2.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
+    omniauth (1.3.1)
+      hashie (>= 1.2, < 4)
+      rack (>= 1.0, < 3)
+    omniauth-oauth2 (1.3.1)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
+    omniauth-spotify (0.0.9)
+      omniauth-oauth2 (~> 1.1)
     pg (0.19.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -155,6 +182,11 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
+=======
+    rest_client (1.8.3)
+      netrc (~> 0.7.7)
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -172,6 +204,12 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
+=======
+    rspotify (1.10.0)
+      omniauth-oauth2 (~> 1.1)
+      rest_client (~> 1.8)
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -224,6 +262,8 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
+  omniauth-oauth2 (~> 1.3.1)
+  omniauth-spotify
   pg (~> 0.18)
   pry
   pry-byebug
@@ -231,6 +271,10 @@ DEPENDENCIES
   rails (~> 5.0.0, >= 5.0.0.1)
   rails-controller-testing
   rspec-rails
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
+=======
+  rspotify
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
   sass-rails (~> 5.0)
   soundcloud
   spring

@@ -5,6 +5,13 @@
 
 @import "compass";
 
+.flex-container-left {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  color: white;
+}
+
 body {
   margin: 0;
   background-color: black;

@@ -1,0 +1,19 @@
+<div class="flex-container-left">
+	<div class="sidebar">
+		<div class="user">
+			<p><%= @spotify_user.id %></p>
+		</div>
+
+		<div class="user-playlists">
+			<ul>
+				<% @spotify_user.playlists.each do |playlist| %>
+					<li><%= playlist.name %></li>
+				<% end %>
+			</ul>
+		</div>
+
+		<div class="user-spotify-player">
+			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists[3].uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+		</div>
+	</div>
+</div>

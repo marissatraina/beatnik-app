@@ -29,8 +29,15 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+<<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
 # soundcloud ruby gem
 gem 'soundcloud'
+=======
+# Use rspotify, omniauth-oauth2, and omniauth-spotify for Spotify implementation
+gem 'rspotify'
+gem 'omniauth-oauth2', '~> 1.3.1'
+gem 'omniauth-spotify'
+>>>>>>> Spotify user authentication added.  Reworked views for main app.
 
 group :development, :test do
   gem 'better_errors'
