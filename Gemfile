@@ -29,15 +29,21 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+<<<<<<< HEAD
 <<<<<<< f1a2945c7b28f86d24aa4966cbd4a7e791cb6bf9
 # soundcloud ruby gem
 gem 'soundcloud'
 =======
+=======
+>>>>>>> c5a85b016373f92b008f05bcbed5069ece37064d
 # Use rspotify, omniauth-oauth2, and omniauth-spotify for Spotify implementation
 gem 'rspotify'
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-spotify'
+<<<<<<< HEAD
 >>>>>>> Spotify user authentication added.  Reworked views for main app.
+=======
+>>>>>>> c5a85b016373f92b008f05bcbed5069ece37064d
 
 gem 'sprockets-rails'
 
