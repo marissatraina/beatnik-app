@@ -1,0 +1,27 @@
+<div class="flex-container-left">
+	<div class="sidebar">
+		<div class="user">
+			<span class="user-photo">
+				<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+			</span>
+			<span class="user-name">
+				<h1><%= @spotify_user.id %></h1>
+			</span>
+		</div>
+
+		<div class="user-playlists">
+			<table>
+				<tr>
+					<th>Playlists</th>
+				</tr>
+				<% @spotify_user.playlists.each do |playlist| %>
+					<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B; <%= playlist.name %></td></tr>
+				<% end %>
+			</table>
+		</div>
+
+		<div class="user-spotify-player">
+			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+		</div>
+	</div>
+</div>
