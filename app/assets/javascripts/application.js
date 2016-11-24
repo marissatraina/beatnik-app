@@ -13,3 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+$(document).ready(function() {
+
+	$(".user-playlist").on("click", function(event) {
+		event.preventDefault();
+
+		var playlistUri = $(this).attr("id");
+		var playlistLink = "'https://embed.spotify.com/?uri=" + playlistUri + "'";
+		var iframePlaylist = "<iframe src=" + playlistLink + " width='300' height='380' frameborder='0' allowtransparency='true'></iframe>";
+		// debugger;
+		$(".user-spotify-player").html(iframePlaylist);
+	})
+})

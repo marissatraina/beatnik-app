@@ -1,19 +1,27 @@
 <div class="flex-container-left">
 	<div class="sidebar">
 		<div class="user">
-			<p><%= @spotify_user.id %></p>
+			<span class="user-photo">
+				<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+			</span>
+			<span class="user-name">
+				<h1><%= @spotify_user.id %></h1>
+			</span>
 		</div>
 
 		<div class="user-playlists">
-			<ul>
+			<table>
+				<tr>
+					<th>Playlists</th>
+				</tr>
 				<% @spotify_user.playlists.each do |playlist| %>
-					<li><%= playlist.name %></li>
+					<tr><td class="user-playlist" id=<%= playlist.uri %> ><%= playlist.name %></td></tr>
 				<% end %>
-			</ul>
+			</table>
 		</div>
 
 		<div class="user-spotify-player">
-			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists[3].uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 		</div>
 	</div>
 </div>
