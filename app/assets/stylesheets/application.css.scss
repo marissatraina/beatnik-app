@@ -37,16 +37,23 @@ h1 {
   color: white;
 }
 
-button#spotify-sign-in {
+button#soundcloud-sign-in {
   width: 210px;
   height: 30px;
   border-radius: 30px 30px 30px 30px;
   border: none;
   background-color: #1db955;
   color: white;
+  outline: none;
 }
 
-button#spotify-sign-in:hover {
+button#soundcloud-sign-in:hover {
   background: lighten(#1db955, 7%);
   transform: scale(1.025);
+  cursor: pointer;
+}
+
+button#soundcloud-sign-in:active {
+  outline: none;
+  border: none;
 }
