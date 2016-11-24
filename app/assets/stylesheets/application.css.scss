@@ -15,7 +15,7 @@ div.user {
 div.user-playlists {
   position: fixed;
   top: 70px;
-  buttom: 380px;
+  bottom: 380px;
   width: 295px;
   height: 53%;
   overflow-y: scroll;
@@ -30,7 +30,7 @@ td.user-playlist:hover {
 td.user-playlist {
   cursor: pointer;
   width: 300px;
-  color: grey;
+  color: gray;
   font-size: 110%;
 }
 
@@ -94,7 +94,7 @@ h1 {
   color: white;
 }
 
-button#soundcloud-sign-in {
+button#spotify-sign-in {
   width: 210px;
   height: 30px;
   border-radius: 30px 30px 30px 30px;
@@ -104,13 +104,13 @@ button#soundcloud-sign-in {
   outline: none;
 }
 
-button#soundcloud-sign-in:hover {
+button#spotify-sign-in:hover {
   background: lighten(#1db955, 7%);
   transform: scale(1.025);
   cursor: pointer;
 }
 
-button#soundcloud-sign-in:active {
+button#spotify-sign-in:active {
   outline: none;
   border: none;
 }

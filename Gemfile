@@ -29,9 +29,6 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# soundcloud ruby gem
-gem 'soundcloud'
-
 # Use rspotify, omniauth-oauth2, and omniauth-spotify for Spotify implementation
 gem 'rspotify'
 gem 'omniauth-oauth2', '~> 1.3.1'
