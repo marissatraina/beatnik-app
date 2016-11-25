@@ -1,0 +1,25 @@
+		<style>
+		  div.user-spotify-player {
+		  position: fixed;
+		  top: 300px;
+		  bottom: 380px;
+		  width: 295px;
+		  height: 53%;
+		  overflow-y: scroll;
+		  margin-top: 20px;
+		  text-overflow: ellipsis;
+		}
+		</style>
+
+		<div class="user-spotify-player" style="padding-top: 200px;">
+			<ul>
+			 <li><h3><%= spotify_user.playlists[index.to_i].name %></h5></li>
+			    <br/>
+			    <% spotify_user.playlists[index.to_i].tracks.each do |track| %>
+			     <a> <%= track.artists.first.name %>: <%= track.name %><audio id="visualAudio" class="inactive" controls="" preload="" autobuffer="" crossorigin="anonymous" src="<%=track.preview_url%>"></audio></a> 
+			    <br/>
+			    <% end %>
+	
+			</ul>
+		</div>
+	</div>

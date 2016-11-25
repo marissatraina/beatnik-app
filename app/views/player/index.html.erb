@@ -14,14 +14,12 @@
 				<tr>
 					<th>Playlists</th>
 				</tr>
-				<% @spotify_user.playlists.each do |playlist| %>
-					<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B; <%= playlist.name %></td></tr>
+				<% @spotify_user.playlists.each_with_index do |playlist, index| %>
+					<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
 				<% end %>
 			</table>
+			<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
+		
 		</div>
 
-		<div class="user-spotify-player">
-			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-		</div>
-	</div>
 </div>
