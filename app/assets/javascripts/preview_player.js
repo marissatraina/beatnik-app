@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-	$(".user-playlist").click(function (event){ 
+	$(document).on("click",".user-playlist",function (event){ 
 	     event.preventDefault(); 
 	     $("div.user-spotify-player").remove();
 	     $.ajax({
