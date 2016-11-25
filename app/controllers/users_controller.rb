@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
   def spotify
-    # binding.pry
     auth = request.env['omniauth.auth']
     session[:auth] = auth
     redirect_to users_index_path

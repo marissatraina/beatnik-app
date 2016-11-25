@@ -5,7 +5,7 @@
 				<% if @spotify_user.images.length > 0 %>
 					<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
 				<% else %>
-					<!-- link to default user image if no image is present -->
+					<%= image_tag "no-user-img.jpg", :class => "user-photo-img" %>
 				<% end %>
 			</span>
 			<span class="user-name">
@@ -35,7 +35,7 @@
 			<% if @spotify_user.playlists.length > 0 %>
 				<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 			<% else %>
-				<!-- link to default spotify player if user has no playlists saved -->
+				<iframe src="https://embed.spotify.com/?uri=spotify:user:cannondale12:playlist:5gDHi21qoyYA1M31o86XYl" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 			<% end %>
 		</div>
 	</div>
