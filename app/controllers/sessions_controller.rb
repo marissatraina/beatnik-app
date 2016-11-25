@@ -1,15 +1,17 @@
 class SessionsController < ApplicationController
 
 	def index
-		# redirect if user is already logged in
+		# binding.pry
 		if session[:auth]
 			redirect_to users_index_path
 		end
 	end
 
   def destroy
+  	# binding.pry
   	session.clear
-  	redirect_to 'sessions#index'
+    request.env['omniauth.auth'] = nil
+  	redirect_to root_url
   end
 
 end
