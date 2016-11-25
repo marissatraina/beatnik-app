@@ -7,6 +7,9 @@
 			<span class="user-name">
 				<h1><%= @spotify_user.id %></h1>
 			</span>
+			<div>
+				<%= link_to "Log Out", '/sessions/destroy' %>
+			</div>
 		</div>
 
 		<div class="user-playlists">
