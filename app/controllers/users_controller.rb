@@ -7,9 +7,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    auth_username = session[:auth]['info']['uid']
+    auth_username = session[:auth]['uid']
     @spotify_user = RSpotify::User.find(auth_username)
-    binding.pry
+    # binding.pry
     render '/player/index'
   end
 
