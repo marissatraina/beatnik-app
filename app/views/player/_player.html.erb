@@ -1,4 +1,6 @@
 		<style>
+	/*	I just threw in some styling here copied from css file so 
+		I could see the players in an organized way, didn't want to touch the css file :p.*/
 		  div.user-spotify-player {
 		  position: fixed;
 		  top: 300px;
@@ -12,11 +14,12 @@
 		</style>
 
 		<div class="user-spotify-player" style="padding-top: 200px;">
+			<audio id="stream" class="player" controls="" preload="" autobuffer="" crossorigin="anonymous" src="https://p.scdn.co/mp3-preview/0bceea9bccc6464ddfad9b80f91aabf10685f9db"></audio>
 			<ul>
 			 <li><h3><%= spotify_user.playlists[index.to_i].name %></h5></li>
 			    <br/>
 			    <% spotify_user.playlists[index.to_i].tracks.each do |track| %>
-			     <a> <%= track.artists.first.name %>: <%= track.name %><audio id="visualAudio" class="inactive" controls="" preload="" autobuffer="" crossorigin="anonymous" src="<%=track.preview_url%>"></audio></a> 
+			     <a id="<%=track.preview_url%>" class="track"> <%= track.artists.first.name %>: <%= track.name %></a> 
 			    <br/>
 			    <% end %>
 	

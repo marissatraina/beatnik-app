@@ -1,4 +1,5 @@
-<div class="flex-container-left">
+<%= render :partial => '/visuals/show' %>
+<div class="flex-container-left" style="background-color: red;">
 	<div class="sidebar">
 		<div class="user">
 			<span class="user-photo">
@@ -8,6 +9,7 @@
 				<h1><%= @spotify_user.id %></h1>
 			</span>
 		</div>
+
 
 		<div class="user-playlists">
 			<table>
