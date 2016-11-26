@@ -123,9 +123,11 @@ html, body {
 
 #hidden-container, #visual-container {
   position: absolute;
+  background-color: black;
 }
 
 #hidden-container {
+  background-color: black;
   top: 0px;
   width: 305px;
   bottom: 0px;
@@ -146,6 +148,10 @@ html, body {
 
 #wrapper {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
 }
 
 .flex-col-container {
@@ -173,8 +179,8 @@ p#slogan {
   color: #525b6f;
   font-weight: bolder;
   margin-top: 0;
-  margin-bottom: 25px;
-  margin-left: 15px;
+  margin-bottom: 50px;
+  margin-left: 17px;
   font-size: 18px;
 }
 
