@@ -50,6 +50,8 @@ img.user-photo-img {
   top: 60px;
   width: 300px;
   background-color: #282828;
+  border-bottom: 1px solid #282828;
+  z-index: 1;
 }
 
 .playlists-header {
@@ -58,7 +60,7 @@ img.user-photo-img {
   position: fixed;
   background-color: #282828;
   border-top: 1px solid #282828;
-  z-index; 1;
+  z-index: 1;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
 }
