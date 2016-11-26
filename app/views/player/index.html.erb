@@ -2,11 +2,18 @@
 	<div class="sidebar">
 		<div class="user">
 			<span class="user-photo">
-				<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+				<% if @spotify_user.images.length > 0 %>
+					<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+				<% else %>
+					<%= image_tag "no-user-img.jpg", :class => "user-photo-img" %>
+				<% end %>
 			</span>
 			<span class="user-name">
 				<h1><%= @spotify_user.id %></h1>
 			</span>
+			<div>
+				<%= button_to('Log Out', '/logout', method: "delete") %>
+			</div>
 		</div>
 
 		<div class="user-playlists">
@@ -14,14 +21,22 @@
 				<tr>
 					<th>Playlists</th>
 				</tr>
-				<% @spotify_user.playlists.each do |playlist| %>
-					<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B; <%= playlist.name %></td></tr>
+				<% if @spotify_user.playlists.length > 0 %>
+					<% @spotify_user.playlists.each do |playlist| %>
+						<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B; <%= playlist.name %></td></tr>
+					<% end %>
+				<% else %>
+					<tr><td>Log in to Spotify to add a playlist!</td></tr>
 				<% end %>
 			</table>
 		</div>
 
 		<div class="user-spotify-player">
-			<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+			<% if @spotify_user.playlists.length > 0 %>
+				<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+			<% else %>
+				<iframe src="https://embed.spotify.com/?uri=spotify:user:cannondale12:playlist:5gDHi21qoyYA1M31o86XYl" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+			<% end %>
 		</div>
 	</div>
 </div>
