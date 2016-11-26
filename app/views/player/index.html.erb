@@ -1,29 +1,35 @@
 <div class="flex-container-left">
 	<div class="sidebar">
+		
 		<div class="user">
-			<span class="user-photo">
+			
+			<div class="user-photo">
 				<% if @spotify_user.images.length > 0 %>
 					<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
 				<% else %>
 					<%= image_tag "no-user-img.jpg", :class => "user-photo-img" %>
 				<% end %>
-			</span>
-			<span class="user-name">
-				<h1><%= @spotify_user.id %></h1>
-			</span>
-			<div>
-				<%= button_to('Log Out', '/logout', method: "delete") %>
 			</div>
+			
+			<div class="user-name">
+				<h1><%= @spotify_user.id %></h1>
+			</div>
+
 		</div>
+			
+		<div class="log-out-button">
+			<%= button_to("Log Out", '/logout', method: "delete") %>
+		</div>
+
+		<div class="playlists-header">Playlists</div>
 
 		<div class="user-playlists">
 			<table>
-				<tr>
-					<th>Playlists</th>
-				</tr>
 				<% if @spotify_user.playlists.length > 0 %>
 					<% @spotify_user.playlists.each do |playlist| %>
-						<tr><td class="user-playlist" id=<%= playlist.uri %> >&#x266B; <%= playlist.name %></td></tr>
+						<tr><td class="user-playlist" id=<%= playlist.uri %> >
+							<div class="playlist-table-data">&#x266B; <%= playlist.name %></div>
+						</td></tr>
 					<% end %>
 				<% else %>
 					<tr><td>Log in to Spotify to add a playlist!</td></tr>
@@ -38,5 +44,6 @@
 				<iframe src="https://embed.spotify.com/?uri=spotify:user:cannondale12:playlist:5gDHi21qoyYA1M31o86XYl" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 			<% end %>
 		</div>
+
 	</div>
 </div>

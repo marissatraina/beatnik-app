@@ -5,22 +5,86 @@
 
 @import "compass";
 
-div.user {
+.sidebar {
+  width: 300px;
+}
+
+.user {
+  background-color: #282828;
   position: fixed;
   left: 0px;
   top: 0px;
-  height: 19%;
+  width: 300px;
+  display: flex;
+  height: 60px;
 }
 
-div.user-playlists {
+.user-photo {
+  display: inline-block;
+  width: 20%;
+}
+
+img.user-photo-img {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.user-name {
+  display: inline-block;
+  padding-left: 5px;
+  padding-top: 15px;
+  width: 80%;
+}
+
+.user-name h1 {
+  display: inline;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+}
+
+.log-out-button {
   position: fixed;
-  top: 70px;
+  top: 60px;
+  width: 300px;
+  background-color: #282828;
+  border-bottom: 1px solid #282828;
+  z-index: 1;
+}
+
+.playlists-header {
+  top: 80px;
+  width: 300px;
+  position: fixed;
+  background-color: #282828;
+  border-top: 1px solid #282828;
+  z-index: 1;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+table {
+  width: 284px;  
+}
+
+.user-playlists {
+  background-color: #181818;
+  position: fixed;
+  margin-top: 2px;
+  float: right;
+  top: 98px;
   bottom: 380px;
-  width: 295px;
-  height: 53%;
+  width: 300px;
   overflow-y: scroll;
-  margin-top: 20px;
+}
+
+.playlist-table-data {
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 279px;
 }
 
 td.user-playlist:hover {
@@ -29,27 +93,15 @@ td.user-playlist:hover {
 
 td.user-playlist {
   cursor: pointer;
-  width: 300px;
   color: gray;
   font-size: 110%;
-}
-
-img.user-photo-img {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-}
-
-span.user-name h1 {
-  display: inline;
-  font-size: 2em;
 }
 
 .user-spotify-player {
   position: fixed;
   left: 0px;
   bottom: 0px;
-  height: 38%;
+  height: 380px;
 }
 
 .flex-container-left {
@@ -59,7 +111,6 @@ span.user-name h1 {
   justify-content: left;
   align-items: left;
   color: white;
-  border-right: 3px solid white;
 }
 
 body {
