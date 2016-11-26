@@ -1,27 +1,31 @@
-<%= render :partial => '/visuals/show' %>
-<div class="flex-container-left" style="background-color: red;">
-	<div class="sidebar">
-		<div class="user">
-			<span class="user-photo">
-				<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
-			</span>
-			<span class="user-name">
-				<h1><%= @spotify_user.id %></h1>
-			</span>
-		</div>
+<div id="hidden-container">
+	<div class="flex-container-left" style="background-color: red;">
+		<div class="sidebar">
+			<div class="user">
+				<span class="user-photo">
+					<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+				</span>
+				<span class="user-name">
+					<h1><%= @spotify_user.id %></h1>
+				</span>
+			</div>
 
 
-		<div class="user-playlists">
-			<table>
-				<tr>
-					<th>Playlists</th>
-				</tr>
-				<% @spotify_user.playlists.each_with_index do |playlist, index| %>
-					<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
-				<% end %>
-			</table>
-			<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
-		
-		</div>
+			<div class="user-playlists">
+				<table>
+					<tr>
+						<th>Playlists</th>
+					</tr>
+					<% @spotify_user.playlists.each_with_index do |playlist, index| %>
+						<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
+					<% end %>
+				</table>
+				<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
+			</div>
+	</div>
+</div>
 
+<div id="visual-container">
+	<button type="button" id="side-button">&#60;</button>
+	<%= render :partial => '/visuals/show' %>
 </div>
