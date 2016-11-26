@@ -118,6 +118,7 @@ html, body {
   padding: 0;
   border: 0;
   background-color: black;
+  background-image: url("/Wynwood_blue.jpg");
 }
 
 #hidden-container, #visual-container {
@@ -157,16 +158,29 @@ div.vert-center-flex-item {
   flex: 1;
 }
 
-h1 {
+h1#logo {
   margin-top: 100%;
-  font-size: 4em;
+  margin-bottom: 0px;
+  font-size: 5em;
   font-family: 'Droid Serif', serif;
   color: white;
+  text-shadow: 1px 1px 6px #401f7a;
+  height: 85px;
+}
+
+p#slogan {
+  font-family: 'Droid Serif', serif;
+  color: #525b6f;
+  font-weight: bolder;
+  margin-top: 0;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  font-size: 18px;
 }
 
 button#spotify-sign-in {
-  width: 210px;
-  height: 30px;
+  width: 270px;
+  height: 35px;
   border-radius: 30px 30px 30px 30px;
   border: none;
   background-color: #1db955;
