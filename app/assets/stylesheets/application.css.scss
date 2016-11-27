@@ -1,7 +1,7 @@
 /*
  *= require_tree .
  *= require_self
- */
+*/
 
 @import "compass";
 
@@ -41,7 +41,7 @@ img.user-photo-img {
 
 .user-name h1 {
   display: inline;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 25px;
 }
 
@@ -66,7 +66,7 @@ img.user-photo-img {
 }
 
 table {
-  width: 284px;  
+  width: 284px;
 }
 
 .user-playlists {
@@ -144,12 +144,6 @@ div#visual-container.full {
   left: 0px;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #wrapper {
   height: 100%;
   margin: 0;
@@ -188,9 +182,15 @@ p#slogan {
   font-size: 18px;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 button#spotify-sign-in {
-  width: 270px;
-  height: 35px;
+  width: 210px;
+  height: 30px;
   border-radius: 30px 30px 30px 30px;
   border: none;
   background-color: #1db955;
@@ -207,14 +207,8 @@ button#spotify-sign-in:hover {
 button#spotify-sign-in:active {
   outline: none;
   border: none;
-<<<<<<< f5d11cfc162446ed8b4498dbab924e9c59be0bce
-}
-=======
 }
 
-button#side-button {
-  background: white;
-  color: black;
-  display: block;
+div.log-out-button, div.playlists-header {
+  position: relative;
 }
->>>>>>> Collapse side-bar

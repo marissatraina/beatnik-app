@@ -18,13 +18,13 @@
 					</div>
 
 				</div>
+				<section>
+					<div class="log-out-button">
+						<%= button_to("Log Out", '/logout', method: "delete") %>
+					</div>
 
-				<div class="log-out-button">
-					<%= button_to("Log Out", '/logout', method: "delete") %>
-				</div>
-
-				<div class="playlists-header">Playlists</div>
-
+					<div class="playlists-header">Playlists</div>
+				</section>
 				<div class="user-playlists">
 					<table>
 						<% if @spotify_user.playlists.length > 0 %>
@@ -52,9 +52,5 @@
 </div>
 
 <div id="visual-container">
-<<<<<<< f5d11cfc162446ed8b4498dbab924e9c59be0bce
-	<button id="side-hide">&#60;</button>
-=======
 	<button type="button" id="side-button">&#60;</button>
->>>>>>> Collapse side-bar
 </div>
