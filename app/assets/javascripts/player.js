@@ -11,9 +11,11 @@ $(document).ready(function() {
 
 	var $visual = $("#visual-container");
 	$("button#side-button").click(function() {
-		$(this).html(function(i, html){
-			return html === "&#60;" ? "&#x2630;" : "&#60;";
-		});
+			if ($visual.hasClass("full")) {
+				$(this).html("&#x2630;");
+			} else {
+				$(this).html("&#60;");
+			};
 		$visual.toggleClass("full");
 	});
 });

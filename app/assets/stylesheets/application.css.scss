@@ -57,7 +57,7 @@ button#spotify-sign-in {
 
 button#spotify-sign-in:hover {
   background: lighten(#1db955, 7%);
-  transform: scaleY(1.05);
+  transform: scale(1.025);
   cursor: pointer;
 }
 
@@ -224,15 +224,16 @@ button#side-button {
   border: none;
   font-size: 18px;
   font-weight: bold;
+  outline: none;
 }
 
 button#side-button:hover {
-  transform: scale(1.025);
+  transform: scaleY(1.25);
 }
 
 button#side-button:active {
-  outline: none;
   border: none;
+  outline: none;
 }
 
 #wrapper {
