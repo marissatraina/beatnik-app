@@ -113,9 +113,28 @@ td.user-playlist {
   color: white;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  border: 0;
   background-color: black;
+}
+
+#hidden-container, #visual-container {
+  position: absolute;
+}
+
+#hidden-container {
+  top: 0px;
+  width: 305px;
+  bottom: 0px;
+}
+
+#visual-container {
+  top: 0px;
+  left: 305px;
+  right: 0px;
+  bottom: 0px;
 }
 
 .flex-container {
