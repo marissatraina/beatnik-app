@@ -220,15 +220,18 @@ div#visual-container.full {
 
 button#side-button {
   background-color: black;
-  color: white;
+  color: gray;
   border: none;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   outline: none;
+  margin-top: 2vh;
+  margin-left: 2vh;
 }
 
 button#side-button:hover {
   transform: scaleY(1.25);
+  color: white;
 }
 
 button#side-button:active {
