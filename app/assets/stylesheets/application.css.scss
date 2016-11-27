@@ -5,6 +5,67 @@
 
 @import "compass";
 
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: black;
+}
+
+header {
+  background-image: url("/Wynwood_blue.jpg");
+  height: 100vh;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10%;
+}
+
+h1#logo {
+  margin-bottom: 0px;
+  font-size: 5em;
+  font-family: 'Droid Serif', serif;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(63, 64, 181, 0.89);
+  height: 85px;
+}
+
+p#slogan {
+  font-family: 'Droid Serif', serif;
+  color: rgb(63, 64, 181);
+  text-shadow: 2px 2px 6px #d7dae6;
+  font-weight: bolder;
+  margin-top: 0;
+  margin-bottom: 5vh;
+  margin-left: 2vh;
+  font-size: 18px;
+}
+
+button#spotify-sign-in {
+  margin-bottom: 19vh;
+  width: 225px;
+  height: 30px;
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+}
+
+button#spotify-sign-in:hover {
+  background: lighten(#1db955, 7%);
+  transform: scale(1.025);
+  cursor: pointer;
+}
+
+button#spotify-sign-in:active {
+  outline: none;
+  border: none;
+}
+
 .sidebar {
   width: 300px;
 }
@@ -113,13 +174,6 @@ td.user-playlist {
   color: white;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: black;
-  background-image: url("/Wynwood_blue.jpg");
-}
 
 #hidden-container, #visual-container {
   position: absolute;
@@ -162,53 +216,9 @@ div.vert-center-flex-item {
   flex: 1;
 }
 
-h1#logo {
-  margin-top: 100%;
-  margin-bottom: 0px;
-  font-size: 5em;
-  font-family: 'Droid Serif', serif;
-  color: white;
-  text-shadow: 1px 1px 6px #401f7a;
-  height: 85px;
-}
-
-p#slogan {
-  font-family: 'Droid Serif', serif;
-  color: #525b6f;
-  font-weight: bolder;
-  margin-top: 0;
-  margin-bottom: 50px;
-  margin-left: 17px;
-  font-size: 18px;
-}
 
 .flex-container {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-button#spotify-sign-in {
-  width: 210px;
-  height: 30px;
-  border-radius: 30px 30px 30px 30px;
-  border: none;
-  background-color: #1db955;
-  color: white;
-  outline: none;
-}
-
-button#spotify-sign-in:hover {
-  background: lighten(#1db955, 7%);
-  transform: scale(1.025);
-  cursor: pointer;
-}
-
-button#spotify-sign-in:active {
-  outline: none;
-  border: none;
-}
-
-div.log-out-button, div.playlists-header {
-  position: relative;
 }
