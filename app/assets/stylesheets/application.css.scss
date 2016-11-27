@@ -140,6 +140,10 @@ html, body {
   bottom: 0px;
 }
 
+div#visual-container.full {
+  left: 0px;
+}
+
 .flex-container {
   display: flex;
   justify-content: center;
@@ -203,4 +207,14 @@ button#spotify-sign-in:hover {
 button#spotify-sign-in:active {
   outline: none;
   border: none;
+<<<<<<< f5d11cfc162446ed8b4498dbab924e9c59be0bce
 }
+=======
+}
+
+button#side-button {
+  background: white;
+  color: black;
+  display: block;
+}
+>>>>>>> Collapse side-bar
