@@ -17,15 +17,15 @@
 						<h1><%= @spotify_user.id %></h1>
 					</div>
 
-				</div>
-				<section>
 					<div class="log-out-button">
 						<%= button_to("Log Out", '/logout', method: "delete") %>
 					</div>
+				</div>
 
-					<div class="playlists-header">Playlists</div>
-				</section>
+
+
 				<div class="user-playlists">
+					<div class="playlists-header">Playlists</div>
 					<table>
 						<% if @spotify_user.playlists.length > 0 %>
 							<% @spotify_user.playlists.each do |playlist| %>
