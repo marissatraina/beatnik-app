@@ -57,7 +57,7 @@ button#spotify-sign-in {
 
 button#spotify-sign-in:hover {
   background: lighten(#1db955, 7%);
-  transform: scale(1.025);
+  transform: scaleY(1.05);
   cursor: pointer;
 }
 
@@ -102,17 +102,37 @@ img.user-photo-img {
 
 .user-name h1 {
   display: inline;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   font-size: 25px;
 }
 
-.log-out-button {
+.log-out-button-container {
   position: fixed;
   top: 60px;
   width: 300px;
   background-color: #282828;
-  border-bottom: 1px solid #282828;
+  border: none;
   z-index: 1;
+}
+
+.log-out-button {
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+  margin-left: 2px;
+}
+
+.log-out-button:hover {
+  background: lighten(#1db955, 7%);
+  transform: scale(1.025);
+  cursor: pointer;
+}
+
+.log-out-button:active {
+  outline: none;
+  border: none;
 }
 
 .playlists-header {
@@ -120,9 +140,9 @@ img.user-photo-img {
   width: 300px;
   position: fixed;
   background-color: #282828;
-  border-top: 1px solid #282828;
+  border: none;
   z-index: 1;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   text-align: center;
 }
 
@@ -181,9 +201,9 @@ td.user-playlist {
 }
 
 #hidden-container {
-  background-color: black;
+  background-color: #282828;
   top: 0px;
-  width: 305px;
+  width: 302px;
   bottom: 0px;
 }
 
@@ -196,6 +216,23 @@ td.user-playlist {
 
 div#visual-container.full {
   left: 0px;
+}
+
+button#side-button {
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button#side-button:hover {
+  transform: scale(1.025);
+}
+
+button#side-button:active {
+  outline: none;
+  border: none;
 }
 
 #wrapper {

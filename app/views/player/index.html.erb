@@ -17,12 +17,10 @@
 						<h1><%= @spotify_user.id %></h1>
 					</div>
 
-					<div class="log-out-button">
-						<%= button_to("Log Out", '/logout', method: "delete") %>
+					<div class="log-out-button-container">
+						<%= button_to("LOG OUT", '/logout', method: "delete", class: "log-out-button")%>
 					</div>
 				</div>
-
-
 
 				<div class="user-playlists">
 					<div class="playlists-header">Playlists</div>
@@ -52,5 +50,5 @@
 </div>
 
 <div id="visual-container">
-	<button type="button" id="side-button">&#60;</button>
+	<button type="button" id="side-button">&#10006;</button>
 </div>
