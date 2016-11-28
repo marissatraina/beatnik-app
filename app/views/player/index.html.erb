@@ -22,30 +22,30 @@
 					</div>
 				</div>
 
-				<div class="user-playlists">
-					<div class="playlists-header">Playlists</div>
-					<table>
-						<% if @spotify_user.playlists.length > 0 %>
-							<% @spotify_user.playlists.each do |playlist| %>
-								<tr><td class="user-playlist" id=<%= playlist.uri %> >
-									<div class="playlist-table-data">&#x266B; <%= playlist.name %></div>
-								</td></tr>
-							<% end %>
-						<% else %>
-							<tr><td>Log in to Spotify to add a playlist!</td></tr>
-						<% end %>
-					</table>
-				</div>
+		<div class="user-playlists">
+			<table>
+				<tr>
+					<th>Playlists</th>
+				</tr>
+				<% @spotify_user.playlists.each_with_index do |playlist, index| %>
+					<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
+				<% end %>
+			</table>
+		    
 
-				<div class="user-spotify-player">
-					<% if @spotify_user.playlists.length > 0 %>
-						<iframe src=<%= 'https://embed.spotify.com/?uri=' + @spotify_user.playlists.first.uri %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-					<% else %>
-						<iframe src="https://embed.spotify.com/?uri=spotify:user:cannondale12:playlist:5gDHi21qoyYA1M31o86XYl" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-					<% end %>
-				</div>
+			<div class="user-spotify-player">
 
+				<div class="audio-player">
+					<div id="player-head">
+					  <h2>playlist name</h2>
+					    <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
+					</div>
+				  <ul id="playlist">
+					<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
+				 </ul>
 			</div>
+
+		</div>
 	</div>
 </div>
 
