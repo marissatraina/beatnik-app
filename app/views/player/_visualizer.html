@@ -1,5 +1,4 @@
 <style>
-
 #b {
   position: fixed;
   top: 0;
@@ -8,13 +7,10 @@
   height: 100%;
   background: radial-gradient(circle, #456, #200);
 }
-
 </style>
-<canvas id="b">
-<audio id="a"></audio>
-<script>
+<canvas id="b"><audio id="a"></audio><script>
 
-c=b.getContext('2d');
+c = b.getContext('2d');
 MAX = 96 * 60;
 onload = function update() {
 
@@ -25,14 +21,14 @@ onload = function update() {
     time = 0;
     frame = 0;
     timeNextFrame = 0;
-    vines = [{x:0,y:0,a:0,ai:0,w:8,p:[],l:MAX*60}];
+    vines = [{x:0, y:0, a:0, ai:0, w:8, p:[], l:MAX*60}];
   }
 
   // time update
   currentTime = performance.now() / 1000;
   while(time < currentTime) {
     while(time < timeNextFrame) {
-      time += 1 / 16384 / 2;
+      time += 1 / 16384;
     }
     frame++;
     timeNextFrame += 1/60;
@@ -48,7 +44,7 @@ onload = function update() {
       v.p.splice(0, v.p.length - v.l);
       v.p.splice(0, v.p.length - 60 * 5);
       v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
-      if (frame % 30 ==0) {
+      if (frame % 30 == 0) {
         v.ai = Math.random() - 0.5;
       }
       if (v.w > 1 && Math.random() < v.l / 16384 / 2) {
@@ -57,6 +53,7 @@ onload = function update() {
 
     })
   }
+
   // render visual
   H = b.height = 512;
   W = b.width = 0 | H * innerWidth / innerHeight;
@@ -69,14 +66,13 @@ onload = function update() {
       c.translate(-v.x, -v.y);
     }
     c.beginPath();
-    l=v.p.length-1;
-    for(i=l;p=v.p[i];i--) {
+    line = v.p.length - 1;
+    for(i = line; p = v.p[i]; i--) {
       c.lineTo(p.x, p.y);
     }
     c.stroke();
     
     })
   }
-}
 
 </script>
