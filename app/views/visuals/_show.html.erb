@@ -10,6 +10,7 @@
     <script>  
 $( document ).ready(function() {
       
+
       var ctx = new AudioContext();
       var audio = document.getElementById('audio-player');
       var audioSrc = ctx.createMediaElementSource(audio);
@@ -103,6 +104,15 @@ $( document ).ready(function() {
         particles.sortParticles = true;
         scene.add( particles );
         particlesArray.push( particles );
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
        }
 
 
@@ -152,6 +162,8 @@ $( document ).ready(function() {
 
       visualSetup();
       draw();
+
+
 
 })
 
