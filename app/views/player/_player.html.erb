@@ -1,0 +1,3 @@
+<% spotify_user.playlists[index.to_i].tracks.each do |track| %>
+	<li class="track"><a id="<%=track.preview_url%>" class="track"> <%= track.artists.first.name %>: <%= track.name %></a></li> 
+<% end %>
