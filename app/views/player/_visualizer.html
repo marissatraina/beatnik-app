@@ -11,7 +11,7 @@
 <canvas id="b"><audio id="a"></audio><script>
 
 c = b.getContext('2d');
-MAX = 96 * 60;
+MAX = 96;
 onload = function update() {
 
   requestAnimationFrame(update);
@@ -44,10 +44,10 @@ onload = function update() {
       v.p.splice(0, v.p.length - v.l);
       v.p.splice(0, v.p.length - 60 * 5);
       v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
-      if (frame % 30 == 0) {
+      if (frame % 10 == 0) {
         v.ai = Math.random() - 0.5;
       }
-      if (v.w > 1 && Math.random() < v.l / 16384 / 2) {
+      if (v.w > 1 && Math.random() < v.l / 16384) {
         vines.push({x:v.x, y:v.y, a:v.a, ai:v.ai, w:v.w/2, p:[], l:Math.min(v.l, 0|v.w * 32 * (1 + Math.random()))});
       }
 
