@@ -16,35 +16,50 @@
 
 					<div class="user-name">
 						<h1><%= @spotify_user.id %></h1>
+						<button id="down-arrow">&#8964;</button>
 					</div>
 
-					<div class="log-out-button-container">
-						<%= button_to("LOG OUT", '/logout', method: "delete", class: "log-out-button")%>
-					</div>
+					<div class="playlists-header">P L A Y L I S T S</div>
 				</div>
 
 				<div class="user-playlists">
 					<table>
-						<tr>
-							<th>Playlists</th>
-						</tr>
-						<% @spotify_user.playlists.each_with_index do |playlist, index| %>
-							<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
+						<% if @spotify_user.playlists.length > 0 %>
+							<% @spotify_user.playlists.each do |playlist| %>
+								<tr><td class="user-playlist" id=<%= playlist.uri %> >
+									<div class="playlist-table-data">&#x266B; <%= playlist.name %></div>
+								</td></tr>
+							<% end %>
+						<% else %>
+							<tr><td>Log in to Spotify to add a playlist!</td></tr>
 						<% end %>
 					</table>
 				</div>
 
 
+
 				<div class="user-spotify-player">
-					<div class="audio-player">
-						<div id="player-head">
-						  <h2>playlist name</h2>
-						   <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
+					<% if @spotify_user.playlists.length > 0 %>
+						<div class="audio-player">
+							<div id="player-head">
+							  <h2>playlist name</h2>
+							   <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
+							</div>
+						  <ul id="playlist">
+							<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
+						 </ul>
+					 	</div>
+					<% else %>
+						<div class="audio-player">
+							<div id="player-head">
+								<h2>playlist name</h2>
+								 <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
+							</div>
+							<ul id="playlist">
+							<%= render :partial => '/player/player', locals: { index: "0", spotify_user: "cannondale12"}  %>
+						 </ul>
 						</div>
-					  <ul id="playlist">
-						<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
-					 </ul>
-				 	</div>
+					<% end %>
 				</div>
 
 			</div>
