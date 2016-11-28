@@ -1,54 +1,56 @@
+<div id="pseudo-body">
+<%= render :partial => '/visuals/show' %>
+	<div id="hidden-container">
+		<div class="flex-container-left">
+			<div class="sidebar">
 
-<div id="hidden-container">
-	<div class="flex-container-left">
-		<div class="sidebar">
+					<div class="user">
 
-				<div class="user">
+						<div class="user-photo">
+							<% if @spotify_user.images.length > 0 %>
+								<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
+							<% else %>
+								<%= image_tag "no-user-img.jpg", :class => "user-photo-img" %>
+							<% end %>
+						</div>
 
-					<div class="user-photo">
-						<% if @spotify_user.images.length > 0 %>
-							<img class="user-photo-img" src=<%= @spotify_user.images[0]['url'] %> />
-						<% else %>
-							<%= image_tag "no-user-img.jpg", :class => "user-photo-img" %>
-						<% end %>
+						<div class="user-name">
+							<h1><%= @spotify_user.id %></h1>
+						</div>
+
+						<div class="log-out-button-container">
+							<%= button_to("LOG OUT", '/logout', method: "delete", class: "log-out-button")%>
+						</div>
 					</div>
 
-					<div class="user-name">
-						<h1><%= @spotify_user.id %></h1>
-					</div>
+			<div class="user-playlists">
+				<table>
+					<tr>
+						<th>Playlists</th>
+					</tr>
+					<% @spotify_user.playlists.each_with_index do |playlist, index| %>
+						<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
+					<% end %>
+				</table>
+			    
 
-					<div class="log-out-button-container">
-						<%= button_to("LOG OUT", '/logout', method: "delete", class: "log-out-button")%>
-					</div>
+				<div class="user-spotify-player">
+
+					<div class="audio-player">
+						<div id="player-head">
+						  <h2>playlist name</h2>
+						    <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
+						</div>
+					  <ul id="playlist">
+						<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
+					 </ul>
 				</div>
 
-		<div class="user-playlists">
-			<table>
-				<tr>
-					<th>Playlists</th>
-				</tr>
-				<% @spotify_user.playlists.each_with_index do |playlist, index| %>
-					<tr><td class="user-playlist" id=<%= index %> >&#x266B; <%= playlist.name %></td></tr>
-				<% end %>
-			</table>
-		    
-
-			<div class="user-spotify-player">
-
-				<div class="audio-player">
-					<div id="player-head">
-					  <h2>playlist name</h2>
-					    <audio id="audio-player" crossorigin="anonymous" src="media/evidence-song.mp3" type="audio/mp3" controls="controls"></audio>
-					</div>
-				  <ul id="playlist">
-					<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
-				 </ul>
 			</div>
-
 		</div>
 	</div>
-</div>
 
-<div id="visual-container">
-	<button type="button" id="side-button">&#60;</button>
+	<div id="visual-container">
+		<button type="button" id="side-button">&#60;</button>
+	</div>
 </div>
