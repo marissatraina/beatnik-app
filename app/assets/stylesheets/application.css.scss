@@ -1,9 +1,70 @@
 /*
  *= require_tree .
  *= require_self
- */
+*/
 
 @import "compass";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: black;
+}
+
+header {
+  background-image: url("/Wynwood_blue.jpg");
+  height: 100vh;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10%;
+}
+
+h1#logo {
+  margin-bottom: 0px;
+  font-size: 5em;
+  font-family: 'Droid Serif', serif;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(63, 64, 181, 0.89);
+  height: 85px;
+}
+
+p#slogan {
+  font-family: 'Droid Serif', serif;
+  color: rgb(63, 64, 181);
+  text-shadow: 2px 2px 6px #d7dae6;
+  font-weight: bolder;
+  margin-top: 0;
+  margin-bottom: 5vh;
+  margin-left: 2vh;
+  font-size: 18px;
+}
+
+button#spotify-sign-in {
+  margin-bottom: 19vh;
+  width: 225px;
+  height: 30px;
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+}
+
+button#spotify-sign-in:hover {
+  background: lighten(#1db955, 7%);
+  transform: scale(1.025);
+  cursor: pointer;
+}
+
+button#spotify-sign-in:active {
+  outline: none;
+  border: none;
+}
 
 .sidebar {
   width: 300px;
@@ -41,17 +102,37 @@ img.user-photo-img {
 
 .user-name h1 {
   display: inline;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   font-size: 25px;
 }
 
-.log-out-button {
+.log-out-button-container {
   position: fixed;
   top: 60px;
   width: 300px;
   background-color: #282828;
-  border-bottom: 1px solid #282828;
+  border: none;
   z-index: 1;
+}
+
+.log-out-button {
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+  margin-left: 2px;
+}
+
+.log-out-button:hover {
+  background: lighten(#1db955, 7%);
+  transform: scale(1.025);
+  cursor: pointer;
+}
+
+.log-out-button:active {
+  outline: none;
+  border: none;
 }
 
 .playlists-header {
@@ -59,14 +140,14 @@ img.user-photo-img {
   width: 300px;
   position: fixed;
   background-color: #282828;
-  border-top: 1px solid #282828;
+  border: none;
   z-index: 1;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   text-align: center;
 }
 
 table {
-  width: 284px;  
+  width: 284px;
 }
 
 .user-playlists {
@@ -113,19 +194,57 @@ td.user-playlist {
   color: white;
 }
 
-body {
-  margin: 0;
+
+#hidden-container, #visual-container {
+  position: absolute;
   background-color: black;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#hidden-container {
+  background-color: #282828;
+  top: 0px;
+  width: 302px;
+  bottom: 0px;
+}
+
+#visual-container {
+  top: 0px;
+  left: 305px;
+  right: 0px;
+  bottom: 0px;
+}
+
+div#visual-container.full {
+  left: 0px;
+}
+
+button#side-button {
+  background-color: black;
+  color: gray;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+  margin-top: 2vh;
+  margin-left: 2vh;
+}
+
+button#side-button:hover {
+  transform: scaleY(1.25);
+  color: white;
+}
+
+button#side-button:active {
+  border: none;
+  outline: none;
 }
 
 #wrapper {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
 }
 
 .flex-col-container {
@@ -138,30 +257,9 @@ div.vert-center-flex-item {
   flex: 1;
 }
 
-h1 {
-  margin-top: 100%;
-  font-size: 4em;
-  font-family: 'Droid Serif', serif;
-  color: white;
-}
 
-button#spotify-sign-in {
-  width: 210px;
-  height: 30px;
-  border-radius: 30px 30px 30px 30px;
-  border: none;
-  background-color: #1db955;
-  color: white;
-  outline: none;
-}
-
-button#spotify-sign-in:hover {
-  background: lighten(#1db955, 7%);
-  transform: scale(1.025);
-  cursor: pointer;
-}
-
-button#spotify-sign-in:active {
-  outline: none;
-  border: none;
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
