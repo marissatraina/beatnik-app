@@ -68,6 +68,7 @@ button#spotify-sign-in:active {
 
 .sidebar {
   width: 300px;
+  height: 100vh;
 }
 
 .user {
@@ -214,8 +215,8 @@ td.user-playlist {
   bottom: 0px;
 }
 
-div#visual-container.full {
-  left: 0px;
+div#hidden-container.hidden {
+  z-index: -2;
 }
 
 button#side-button {
@@ -226,7 +227,9 @@ button#side-button {
   font-weight: bold;
   outline: none;
   margin-top: 2vh;
-  margin-left: 2vh;
+  left: 315px;
+  position: fixed;
+  z-index: 2;
 }
 
 button#side-button:hover {
@@ -262,4 +265,15 @@ div.vert-center-flex-item {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+canvas {
+  z-index: -1;
+}
+
+button#side-button.forward {
+  z-index: 2;
+  position: fixed;
+  left: 0px;
+  margin-left: 2vh;
 }

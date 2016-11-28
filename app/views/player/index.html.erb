@@ -1,5 +1,5 @@
 <div id="pseudo-body">
-<%= render :partial => '/visuals/show' %>
+	<%= render :partial => '/visuals/show' %>
 	<div id="hidden-container">
 		<div class="flex-container-left">
 			<div class="sidebar">
@@ -33,7 +33,7 @@
 						<% end %>
 					</table>
 				</div>
-			    
+
 
 				<div class="user-spotify-player">
 					<div class="audio-player">
@@ -44,13 +44,15 @@
 					  <ul id="playlist">
 						<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
 					 </ul>
+				 	</div>
 				</div>
 
 			</div>
 		</div>
 	</div>
 
-	<div id="visual-container">
+	<div id="button-container">
 		<button type="button" id="side-button">&#60;</button>
 	</div>
+
 </div>

@@ -1,15 +1,15 @@
   <div class="visual">
 
-    
+
     <script src="http://brangerbriz.net/labs/threejs_playGnd/js/three.min.js"></script>
     <script src="http://brangerbriz.net/labs/threejs_playGnd/js/Detector.js"></script>
     <script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js"></script>
 
 <!--       <audio id="stream" class="player" controls="" preload="" autobuffer="" crossorigin="anonymous" src="https://p.scdn.co/mp3-preview/0bceea9bccc6464ddfad9b80f91aabf10685f9db"></audio> -->
-  
-    <script>  
+
+    <script>
 $( document ).ready(function() {
-      
+
 
       var ctx = new AudioContext();
       var audio = document.getElementById('audio-player');
@@ -19,12 +19,12 @@ $( document ).ready(function() {
       audioSrc.connect(ctx.destination);
       var frequencyData = new Uint8Array(analyser.frequencyBinCount)
       analyser.getByteFrequencyData(frequencyData)
-  
-      
+
+
       // three.js globals
-      var cubesArray = [] 
-      var particlesArray = [] 
-      var camera, scene, renderer; 
+      var cubesArray = []
+      var particlesArray = []
+      var camera, scene, renderer;
       var geometry, controls, material, mesh;
 
       function visualSetup() {
@@ -35,22 +35,22 @@ $( document ).ready(function() {
 
         renderer.setSize( W, H );
 
-        document.body.appendChild( renderer.domElement ); //the renderer's dom friendly copy
+        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
         //gets added to the DOM so we can actually see things happen.
         // camera setup ========================================
         camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
         camera.position.z = 100;
         // =====================================================
         scene = new THREE.Scene();
-        
+
         geometry = new THREE.CubeGeometry( 25, 25, 25 );
 
-        // this is all we need to be able to click and move camera 
+        // this is all we need to be able to click and move camera
         controls = new THREE.OrbitControls( camera );
         // =======================================================
 
         for ( var i = 0; i < 600; i ++ ) {
-        
+
           var points = [
             new THREE.Vector3( -12.556202011182904, -6.6237210761755705, 11.476452415809035 ),
             new THREE.Vector3( -26.308831991627812, -36.702050315216184, -65.70204044692218 ),
@@ -68,21 +68,21 @@ $( document ).ready(function() {
             new THREE.Vector3( -82.40420743823051, -40.75323059223592, 76.98600050061941 ),
             new THREE.Vector3( -39.261171920225024, 60.10815342888236, -73.79144192673266 ),
           ];
-          
+
             geometry = new THREE.ConvexGeometry( points );
             material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading });
             mesh = new THREE.Mesh(geometry, material);
             scene.add(mesh);
-              
+
             mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.2;
-            
+
             mesh.position.x = Math.random() * 1500 - 750;
             mesh.position.y = Math.random() * 1500 - 750;
             mesh.position.z = Math.random() * 1500 - 750;
 
             mesh.rotation.x = Math.random() * 2 * Math.PI;
             mesh.rotation.y = Math.random() * 2 * Math.PI;
-            
+
             scene.add(mesh);
             cubesArray.push( mesh );
 
@@ -122,13 +122,13 @@ $( document ).ready(function() {
         controls.update();
 
         try {
-          analyser.getByteFrequencyData(frequencyData) 
+          analyser.getByteFrequencyData(frequencyData)
         }
         catch(err) {
           frequencyData = [0]
         }
 
-      
+
         freqSum = frequencyData.reduce(function(a, b) {
           return a + b;
         }, 0);
@@ -136,7 +136,7 @@ $( document ).ready(function() {
           // console.log(frequencyData);
 
          for ( var i = 0; i < cubesArray.length; i ++ ) {
-            camera.position.z = 150; 
+            camera.position.z = 150;
             cubesArray[i].position.x = (frequencyData[i] / 10)
             cubesArray[i].position.y = (frequencyData[i] / 10)
             cubesArray[i].position.z = (frequencyData[i] / 10)
@@ -147,8 +147,8 @@ $( document ).ready(function() {
             //     particlesArray[x].position.y = (frequencyData[i] * getRandomInt(1,5))
             //     particlesArray[x].position.z = (frequencyData[i] * getRandomInt(1,5))
             //     // camera.position.z = 2000;
-            //     // camera.position.x = (frequencyData[i] * getRandomInt(200,600))    
-            //     // camera.position.y = (frequencyData[i] * getRandomInt(200,600))    
+            //     // camera.position.x = (frequencyData[i] * getRandomInt(200,600))
+            //     // camera.position.y = (frequencyData[i] * getRandomInt(200,600))
             //   }
             // }
 

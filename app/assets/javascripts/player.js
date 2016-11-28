@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
-	var $visual = $("#visual-container");
+	var $hidden = $("#hidden-container");
 	$("button#side-button").click(function() {
-			if ($visual.hasClass("full")) {
+			if ($hidden.hasClass("hidden")) {
 				$(this).html("&#60;");
 			} else {
 				$(this).html("&#x2630;");
 			};
-		$visual.toggleClass("full");
+		$hidden.toggleClass("hidden");
+		$(this).toggleClass("forward");
 	});
-	
 });
