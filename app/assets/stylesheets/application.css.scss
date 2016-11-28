@@ -70,6 +70,7 @@ button#spotify-sign-in:active {
 .sidebar {
   width: 300px;
   height: 100vh;
+  overflow: hidden;
 }
 
 .user {
@@ -139,7 +140,7 @@ img.user-photo-img {
 
 .playlists-header {
   color: white;
-  top: 70px;
+  top: 65px;
   width: 300px;
   position: fixed;
   background-color: #282828;
@@ -164,6 +165,7 @@ table {
   bottom: 380px;
   width: 300px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .playlist-table-data {
@@ -186,17 +188,22 @@ td.user-playlist {
 .user-spotify-player {
   position: fixed;
   left: 0px;
-  bottom: 0px;
-  height: 380px;
+  bottom: -10px;
+  // margin-b
+  // height: 476px;
+  overflow: hidden;
 }
 
 .flex-container-left {
-  height:100vh;
+  height:100%;
   width: 300px;
   display: flex;
   justify-content: left;
   align-items: left;
   color: white;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-height: 100vh;
 }
 
 
@@ -210,6 +217,8 @@ td.user-playlist {
   top: 0px;
   width: 302px;
   bottom: 0px;
+  height: 100%;
+  overflow: hidden;
 }
 
 #visual-container {
@@ -217,6 +226,8 @@ td.user-playlist {
   left: 305px;
   right: 0px;
   bottom: 0px;
+  overflow: hidden;
+  height: 100%;
 }
 
 div#hidden-container.hidden {
@@ -272,6 +283,8 @@ div.vert-center-flex-item {
 }
 
 canvas {
+  height: 100%;
+  width: 100%;
   z-index: -1;
 }
 
@@ -309,4 +322,14 @@ button#down-arrow:hover {
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+div.audio-player {
+  overflow: hidden;
+}
+
+div#psuedo-body {
+  height: 100vh;
+  width: 100vh;
+  overflow: hidden;
 }
