@@ -25,31 +25,24 @@ $(document).ready(function() {
   analyser.getByteFrequencyData(frequencyData);
 
   c = b.getContext('2d');
-  MAX = 360;
+  MAX = 180;
 
   onload = function update(event) {
 
     requestAnimationFrame(update);
     analyser.getByteFrequencyData(frequencyData);
-    highFreq = 0;
-    freqIndex = 0;
-    color = 0;
-    for(i = 0; i < frequencyData.length; i++) {
-      if (frequencyData[i] >= highFreq) {
-        highFreq = frequencyData[i];
-        freqIndex = i;
-      }
-    }
+    highFreq = Math.max(...frequencyData);
+    freqIndex = frequencyData.indexOf(highFreq);
 
-    if (freqIndex > 0 && freqIndex < 360) {
-      color = Math.pow(freqIndex, 2);
-      if (color > 360) {
-        color = 360;
-      }
-    } else {
+    color = Math.pow(freqIndex, 5);
+    if (color > 360) {
       color = 360;
     }
+    
+    lightness = Math.ceil(highFreq / 3.4);
+
     // console.log(color);
+    // console.log(lightness);
 
     // init
     if (!window.time) {
@@ -110,7 +103,7 @@ $(document).ready(function() {
     c.shadowBlur = 24;
     vines.forEach(v => {
       c.shadowColor = 
-      c.strokeStyle = 'hsl(' + color + ',100%,'+(60+v.w*5)+'%)';
+      c.strokeStyle = 'hsl(' + color + ',100%,' + lightness + '%)';
       if (v.w == 8) {
         c.translate(-v.x, -v.y);
       }
