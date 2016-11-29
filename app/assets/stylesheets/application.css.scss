@@ -331,3 +331,9 @@ div#psuedo-body {
   width: 100vh;
   overflow: hidden;
 }
+
+button.visual-down-arrow {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+}

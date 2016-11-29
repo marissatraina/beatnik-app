@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require mediaelement-and-player.min.js 
 //= require three.min.js 
+//= require OrbitControls.js
+//= require Detector.js
 //= require_tree .

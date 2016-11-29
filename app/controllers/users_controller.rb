@@ -20,6 +20,10 @@ class UsersController < ApplicationController
     render :partial => '/player/player', locals: { index: @index, spotify_user: @spotify_user }
   end
 
+  def visual_selector
+    render :partial => '/visuals/sine'
+  end
+
   def index_params
     params.permit(:index)
   end 

@@ -1,4 +1,3 @@
-<div class="visual">
 <style>
 #b {
   position: fixed;
@@ -11,36 +10,47 @@
 </style>
 <canvas id="b">
 
-<script>
+<script id="vines-script">
 $(document).ready(function() {
 
   // audio init
-  ctx = new AudioContext();
-  audio = document.getElementById('audio-player');
+  var ctx = new AudioContext();
+  var audio = document.getElementById('audio-player');
   audioSrc = ctx.createMediaElementSource(audio);
-  analyser = ctx.createAnalyser();
+  var analyser = ctx.createAnalyser();
   audioSrc.connect(analyser);
   audioSrc.connect(ctx.destination);
-  frequencyData = new Uint8Array(analyser.frequencyBinCount);
+  var frequencyData = new Uint8Array(analyser.frequencyBinCount);
   analyser.getByteFrequencyData(frequencyData);
 
-  c = b.getContext('2d');
-  MAX = 360;
-  frameFactor = 15;
+  var c = b.getContext('2d');
+  var MAX = 360;
+  var frameFactor = 15;
+
+  var buttonClick = false;
+
+  $(document).on("click", "button.visual-down-arrow", function(event) {
+    debugger;
+    buttonClick = true;
+  })
 
   onload = function update(event) {
 
+    if (buttonClick) {
+      return;
+    }
+
     requestAnimationFrame(update);
     analyser.getByteFrequencyData(frequencyData);
-    highFreq = Math.max(...frequencyData);
-    freqIndex = frequencyData.indexOf(highFreq);
+    var highFreq = Math.max(...frequencyData);
+    var freqIndex = frequencyData.indexOf(highFreq);
 
-    color = Math.pow(freqIndex, 4);
+    var color = Math.pow(freqIndex, 4);
     if (color > 360) {
       color = 360;
     }
 
-    lightness = Math.ceil(highFreq / 3.4);
+    var lightness = Math.ceil(highFreq / 3.4);
 
     // console.log(color);
     // console.log(lightness);
@@ -97,8 +107,8 @@ $(document).ready(function() {
     }
     
     // render visual
-    H = b.height = 512;
-    W = b.width = 0 | H * innerWidth / innerHeight;
+    var H = b.height = 512;
+    var W = b.width = 0 | H * innerWidth / innerHeight;
     c.translate(W/2, H/2);
     c.shadowBlur = 24;
     vines.forEach(v => {
@@ -120,4 +130,4 @@ $(document).ready(function() {
 })
 
 </script>
-</div>
+</canvas>
