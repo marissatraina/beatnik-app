@@ -69,7 +69,7 @@ button#spotify-sign-in:active {
 
 .sidebar {
   width: 300px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -80,7 +80,7 @@ button#spotify-sign-in:active {
   top: 0px;
   width: 300px;
   display: flex;
-  height: 60px;
+  height: 12%;
 }
 
 .user-photo {
@@ -189,8 +189,6 @@ td.user-playlist {
   position: fixed;
   left: 0px;
   bottom: -10px;
-  // margin-b
-  // height: 476px;
   overflow: hidden;
 }
 
