@@ -11,6 +11,7 @@ html, body {
   border: 0;
   background-color: black;
   font-family: 'Titillium Web', sans-serif;
+  overflow: hidden;
 }
 
 header {
@@ -80,21 +81,7 @@ button#spotify-sign-in:active {
   top: 0px;
   width: 300px;
   display: flex;
-  height: 12%;
-  z-index: 2;
-}
-
-div#drop-down-container {
-  display: inline-block;
-  width: 20%;
-  z-index: 3;
-  align-content: center;
-}
-
-div#logout-drop-down {
-  width: 68px;
-  background-color: rgba(238, 242, 247, 0.45);
-  border-radius: 10px 10px 10px 10px;
+  height: 15%;
 }
 
 .user-photo {
@@ -111,32 +98,38 @@ img.user-photo-img {
 }
 
 .user-name {
-  display: flex;
+  display: inline-block;
   padding-left: 5px;
   padding-top: 0px;
   width: 80%;
 }
 
 .user-name h1 {
-  display: inline-block;
+  display: inline;
   font-family: 'Droid Serif', sans-serif;
   font-size: 25px;
 }
 
-.log-out-button {
-  border-radius: 5px 5px 5px 5px;
+.log-out-button-container {
+  position: fixed;
+  top: 60px;
+  width: 300px;
+  background-color: #282828;
   border: none;
-  background-color: rgba(238, 242, 247, 0);
+  z-index: 1;
+}
+
+.log-out-button {
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
   color: white;
   outline: none;
   margin-left: 2px;
-  width: 100%;
-  padding: 0;
-  margin-left: 0;
 }
 
 .log-out-button:hover {
-  color: 	#91eeb3;
+  background: lighten(#1db955, 7%);
   transform: scale(1.025);
   cursor: pointer;
 }
@@ -149,12 +142,11 @@ img.user-photo-img {
 .playlists-header {
   color: white;
   top: 65px;
-  left: 0;
   width: 300px;
   position: fixed;
   background-color: #282828;
   border: none;
-  z-index: -1;
+  z-index: 1;
   font-weight: light;
   font-size: 1.5em;
   text-align: center;
@@ -171,7 +163,7 @@ table {
   margin-top: 2px;
   float: right;
   top: 105px;
-  bottom: 380px;
+  height: 43%;
   width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -197,12 +189,13 @@ td.user-playlist {
 .user-spotify-player {
   position: fixed;
   left: 0px;
-  bottom: -10px;
+  bottom: 0px;
+  height: 42%;
   overflow: hidden;
 }
 
 .flex-container-left {
-  height: 100%;
+  height:100%;
   width: 300px;
   display: flex;
   justify-content: left;
@@ -210,6 +203,7 @@ td.user-playlist {
   color: white;
   overflow-x: hidden;
   overflow-y: hidden;
+  max-height: 100vh;
 }
 
 
@@ -223,7 +217,7 @@ td.user-playlist {
   top: 0px;
   width: 302px;
   bottom: 0px;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -263,6 +257,14 @@ button#side-button:active {
   outline: none;
 }
 
+#wrapper {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+}
+
 .flex-col-container {
   display: flex;
   justify-content: center;
@@ -281,8 +283,9 @@ div.vert-center-flex-item {
 }
 
 canvas {
-  height: 100%;
-  width: 100%;
+  height: 99%;
+  width: 99%;
+  overflow: hidden;
   z-index: -1;
 }
 
@@ -324,6 +327,7 @@ button#down-arrow:hover {
 
 div.audio-player {
   overflow: hidden;
+  height: 100%;
 }
 
 div#psuedo-body {
