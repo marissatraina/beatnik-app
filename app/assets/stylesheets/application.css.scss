@@ -11,7 +11,6 @@ html, body {
   border: 0;
   background-color: black;
   font-family: 'Titillium Web', sans-serif;
-  overflow: hidden;
 }
 
 header {
@@ -81,7 +80,7 @@ button#spotify-sign-in:active {
   top: 0px;
   width: 300px;
   display: flex;
-  height: 15%;
+  height: 12%;
 }
 
 .user-photo {
@@ -163,7 +162,7 @@ table {
   margin-top: 2px;
   float: right;
   top: 105px;
-  height: 43%;
+  bottom: 380px;
   width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -189,8 +188,7 @@ td.user-playlist {
 .user-spotify-player {
   position: fixed;
   left: 0px;
-  bottom: 0px;
-  height: 42%;
+  bottom: -10px;
   overflow: hidden;
 }
 
@@ -217,7 +215,7 @@ td.user-playlist {
   top: 0px;
   width: 302px;
   bottom: 0px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -283,9 +281,8 @@ div.vert-center-flex-item {
 }
 
 canvas {
-  height: 99%;
-  width: 99%;
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
   z-index: -1;
 }
 
@@ -327,7 +324,6 @@ button#down-arrow:hover {
 
 div.audio-player {
   overflow: hidden;
-  height: 100%;
 }
 
 div#psuedo-body {
