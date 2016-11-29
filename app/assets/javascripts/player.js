@@ -10,4 +10,9 @@ $(document).ready(function() {
 		$hidden.toggleClass("hidden");
 		$(this).toggleClass("forward");
 	});
+
+	var $dropdown = $("div#logout-drop-down");
+	$("button#down-arrow").click(function() {
+		$dropdown.toggleClass("hidden");
+	});
 });
