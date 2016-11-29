@@ -22,6 +22,6 @@ class UsersController < ApplicationController
 
   def index_params
     params.permit(:index)
-  end 
+  end
 
 end
