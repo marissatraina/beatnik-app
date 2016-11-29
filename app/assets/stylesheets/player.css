@@ -18,13 +18,12 @@ div.audio-player {
   border-radius: 3px;
   overflow: scroll;
 }
-.audio-player h2 {
+div.audio-player h2 {
   position: absolute;
   top: 7px;
   left: 10px;
-  font-family: 'futura';
-  font-weight: bold;
-  font-size: 10px;
+  font-weight: normal;
+  font-size: 14px;
   color: #ececec;
 }
 
@@ -123,7 +122,6 @@ div.audio-player {
   display: block;
   left: 0;
   top: 4px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 10px;
   font-weight: bold;
   color: #666;
@@ -147,7 +145,7 @@ ul#playlist{
   padding: 5px;
   margin: auto;
   color: white;
-  font-size: 10px;
+  font-size: 12 px;
 }
 
 div#player-head {
