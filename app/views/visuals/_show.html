@@ -25,7 +25,8 @@ $(document).ready(function() {
   analyser.getByteFrequencyData(frequencyData);
 
   c = b.getContext('2d');
-  MAX = 180;
+  MAX = 360;
+  frameFactor = 15;
 
   onload = function update(event) {
 
@@ -34,11 +35,11 @@ $(document).ready(function() {
     highFreq = Math.max(...frequencyData);
     freqIndex = frequencyData.indexOf(highFreq);
 
-    color = Math.pow(freqIndex, 5);
+    color = Math.pow(freqIndex, 4);
     if (color > 360) {
       color = 360;
     }
-    
+
     lightness = Math.ceil(highFreq / 3.4);
 
     // console.log(color);
@@ -84,7 +85,7 @@ $(document).ready(function() {
           // frame % num represents beat
           // i.e. if tempo is 60bpm, then num = 60
           // (frame % 60 == 0)
-          if (frame % 15 == 0) {
+          if (frame % frameFactor == 0) {
             v.ai = Math.random() - 0.5;
           }
           if (v.w > 1 && Math.random() < v.l / 16384 / 2) {
@@ -95,7 +96,6 @@ $(document).ready(function() {
       }
     }
     
-
     // render visual
     H = b.height = 512;
     W = b.width = 0 | H * innerWidth / innerHeight;
@@ -103,6 +103,7 @@ $(document).ready(function() {
     c.shadowBlur = 24;
     vines.forEach(v => {
       c.shadowColor = 
+      // color and lightness values taken from frequencyData array
       c.strokeStyle = 'hsl(' + color + ',100%,' + lightness + '%)';
       if (v.w == 8) {
         c.translate(-v.x, -v.y);
