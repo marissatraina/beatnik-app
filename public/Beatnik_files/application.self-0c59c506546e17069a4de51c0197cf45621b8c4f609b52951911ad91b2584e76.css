@@ -1,0 +1,406 @@
+/*
+
+
+*/
+/* line 9, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+/* line 17, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+header {
+  background-image: url("/Wynwood_blue.jpg");
+  height: 100vh;
+  background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10%;
+}
+
+/* line 29, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+h1#logo {
+  margin-bottom: 0px;
+  font-size: 5em;
+  font-family: 'Droid Serif', serif;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(64, 88, 173, 0.85);
+  height: 85px;
+}
+
+/* line 38, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+p#slogan {
+  font-family: 'Droid Serif', serif;
+  color: #4058ad;
+  text-shadow: 2px 2px 6px #d7dae6;
+  font-weight: bolder;
+  margin-top: 0;
+  margin-bottom: 5vh;
+  margin-left: 2vh;
+  font-size: 18px;
+}
+
+/* line 49, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#spotify-sign-in {
+  margin-bottom: 19vh;
+  width: 225px;
+  height: 30px;
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+}
+
+/* line 60, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#spotify-sign-in:hover {
+  background: #22d863;
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+  cursor: pointer;
+}
+
+/* line 66, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#spotify-sign-in:active {
+  outline: none;
+  border: none;
+}
+
+/* line 71, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.sidebar {
+  width: 300px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 77, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user {
+  background-color: #282828;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 12%;
+}
+
+/* line 87, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user-photo {
+  display: inline-block;
+  width: 20%;
+}
+
+/* line 92, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+img.user-photo-img {
+  margin-left: 5px;
+  margin-top: 5px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+/* line 100, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user-name {
+  display: inline-block;
+  padding-left: 5px;
+  padding-top: 0px;
+  width: 80%;
+}
+
+/* line 107, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user-name h1 {
+  display: inline;
+  font-family: 'Droid Serif', sans-serif;
+  font-size: 25px;
+}
+
+/* line 113, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.log-out-button-container {
+  position: fixed;
+  top: 60px;
+  width: 300px;
+  background-color: #282828;
+  border: none;
+  z-index: 1;
+}
+
+/* line 122, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.log-out-button {
+  border-radius: 30px 30px 30px 30px;
+  border: none;
+  background-color: #1db955;
+  color: white;
+  outline: none;
+  margin-left: 2px;
+}
+
+/* line 131, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.log-out-button:hover {
+  background: #22d863;
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+  cursor: pointer;
+}
+
+/* line 137, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.log-out-button:active {
+  outline: none;
+  border: none;
+}
+
+/* line 142, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.playlists-header {
+  color: white;
+  top: 65px;
+  width: 300px;
+  position: fixed;
+  background-color: #282828;
+  border: none;
+  z-index: 1;
+  font-weight: light;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* line 155, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+table {
+  width: 284px;
+}
+
+/* line 159, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user-playlists {
+  font-weight: bold;
+  background-color: #181818;
+  position: fixed;
+  margin-top: 2px;
+  float: right;
+  top: 105px;
+  bottom: 380px;
+  width: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* line 172, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.playlist-table-data {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 279px;
+}
+
+/* line 179, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+td.user-playlist:hover {
+  color: white;
+}
+
+/* line 183, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+td.user-playlist {
+  cursor: pointer;
+  color: gray;
+  font-size: 110%;
+}
+
+/* line 189, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.user-spotify-player {
+  position: fixed;
+  left: 0px;
+  bottom: -10px;
+  overflow: hidden;
+}
+
+/* line 196, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.flex-container-left {
+  height: 100%;
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+
+/* line 209, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+#hidden-container, #visual-container {
+  position: absolute;
+  background-color: black;
+}
+
+/* line 214, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+#hidden-container {
+  background-color: #282828;
+  top: 0px;
+  width: 302px;
+  bottom: 0px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 223, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+#visual-container {
+  top: 0px;
+  left: 305px;
+  right: 0px;
+  bottom: 0px;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* line 232, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+div#hidden-container.hidden {
+  z-index: -2;
+}
+
+/* line 236, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#side-button {
+  background-color: black;
+  color: gray;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+  margin-top: 2vh;
+  left: 315px;
+  position: fixed;
+  z-index: 2;
+}
+
+/* line 249, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#side-button:hover {
+  -webkit-transform: scaleY(1.25);
+          transform: scaleY(1.25);
+  color: white;
+}
+
+/* line 254, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#side-button:active {
+  border: none;
+  outline: none;
+}
+
+/* line 259, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+#wrapper {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* line 267, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.flex-col-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+/* line 273, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+div.vert-center-flex-item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+/* line 278, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+.flex-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* line 284, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+canvas {
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+/* line 290, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#side-button.forward {
+  z-index: 2;
+  position: fixed;
+  left: 0px;
+  margin-left: 2vh;
+}
+
+/* line 297, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#down-arrow {
+  padding: 0;
+  margin-left: 0.8vh;
+  outline: none;
+  border: none;
+  background-color: #282828;
+  font-size: 2em;
+  height: 50px;
+  color: #4687d6;
+}
+
+/* line 308, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+button#down-arrow:hover {
+  color: white;
+}
+
+/* line 312, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* line 316, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+/* line 321, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+/* line 326, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+div.audio-player {
+  overflow: hidden;
+}
+
+/* line 330, /Users/apprentice/Desktop/beatnik/monday/beatnik-app/app/assets/stylesheets/application.css.scss */
+div#psuedo-body {
+  height: 100vh;
+  width: 100vh;
+  overflow: hidden;
+}

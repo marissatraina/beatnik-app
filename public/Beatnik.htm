@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost:3000/users/index -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Beatnik</title>
+    <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="HhLper+IHbh9w3qW3bHWCeVz/w0OMtpPjSni9Lk4JVeYgmtdfsJhy1v6hYJSpHcRB3EpyWdqpcVM5a3MRIqO7Q==">
+
+    <link rel="stylesheet" media="screen" href="./Beatnik_files/player.self-9c347f81587054b0eb8bbc54ad6baeed9be711498599af09625ab23d437d051c.css">
+<link rel="stylesheet" media="screen" href="./Beatnik_files/application.self-0c59c506546e17069a4de51c0197cf45621b8c4f609b52951911ad91b2584e76.css">
+<link rel="stylesheet" media="screen" href="./Beatnik_files/css">
+    <link rel="stylesheet" media="screen" href="./Beatnik_files/player.self-9c347f81587054b0eb8bbc54ad6baeed9be711498599af09625ab23d437d051c.css">
+<link rel="stylesheet" media="screen" href="./Beatnik_files/application.self-0c59c506546e17069a4de51c0197cf45621b8c4f609b52951911ad91b2584e76.css">
+<link rel="stylesheet" media="screen" href="./Beatnik_files/css(1)">
+    <link rel="stylesheet" media="all" href="./Beatnik_files/player.self-9c347f81587054b0eb8bbc54ad6baeed9be711498599af09625ab23d437d051c.css">
+<link rel="stylesheet" media="all" href="./Beatnik_files/application.self-0c59c506546e17069a4de51c0197cf45621b8c4f609b52951911ad91b2584e76.css">
+    <script src="./Beatnik_files/jquery.self-bd7ddd393353a8d2480a622e80342adf488fb6006d667e8b42e4c0073393abee.js"></script>
+<script src="./Beatnik_files/jquery_ujs.self-784a997f6726036b1993eb2217c9cb558e1cbb801c6da88105588c56f13b466a.js"></script>
+<script src="./Beatnik_files/mediaelement-and-player.min.self-397f112d6034e3beb594c3a9dceb38eedf185d2519efd63321d34cdec2bbd46f.js"></script>
+<script src="./Beatnik_files/three.min.self-57d6d0a7d8f281eb6bcecda43f1072d434f3fbf27920cd0465a7197b419b010d.js"></script>
+<script src="./Beatnik_files/action_cable.self-1641ec3e8ea24ed63601e86efcca7f9266e09f390e82199d56aa7e4bd50e1aa9.js"></script>
+<script src="./Beatnik_files/cable.self-6e0514260c1aa76eaf252412ce74e63f68819fd19bf740595f592c5ba4c36537.js"></script>
+<script src="./Beatnik_files/custom_player.self-d9ca87d459df31b91676479392e489dd2d795f6e890bc990d9c562e3ab59ab60.js"></script>
+<script src="./Beatnik_files/player.self-9183a737fe88e14407f8672659e528b3e5bc6663220631197f2a089d3fd6ad88.js"></script>
+<script src="./Beatnik_files/visual.self-0df76694d19eb23bae5728e8e64d2f9d48aec25b13cfcc93f7f31761a0b3f222.js"></script>
+<script src="./Beatnik_files/application.self-afe802b04eaf1de2ea762489c83c08aa4c4ff3ff13c21566e43cb710683f5abc.js"></script>
+
+  </head>
+
+  <body>
+    <div id="pseudo-body">
+	  <div class="visual">
+
+
+    <script src="./Beatnik_files/three.min.js"></script>
+    <script src="./Beatnik_files/Detector.js"></script>
+    <script src="./Beatnik_files/OrbitControls.js"></script>
+
+<!--       <audio id="stream" class="player" controls="" preload="" autobuffer="" crossorigin="anonymous" src="https://p.scdn.co/mp3-preview/0bceea9bccc6464ddfad9b80f91aabf10685f9db"></audio> -->
+
+    <script>
+$( document ).ready(function() {
+
+
+      var ctx = new AudioContext();
+      var audio = document.getElementById('audio-player');
+      var audioSrc = ctx.createMediaElementSource(audio);
+      var analyser = ctx.createAnalyser();
+      audioSrc.connect(analyser);
+      audioSrc.connect(ctx.destination);
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount)
+      analyser.getByteFrequencyData(frequencyData)
+
+
+      // three.js globals
+      var cubesArray = []
+      var particlesArray = []
+      var camera, scene, renderer;
+      var geometry, controls, material, mesh;
+
+      function visualSetup() {
+        //getting correct sizing based on the browser window (more adaptable)
+        var W = window.innerWidth, H = window.innerHeight;
+
+        renderer = new THREE.WebGLRenderer();
+
+        renderer.setSize( W, H );
+
+        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
+        //gets added to the DOM so we can actually see things happen.
+        // camera setup ========================================
+        camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
+        camera.position.z = 100;
+        // =====================================================
+        scene = new THREE.Scene();
+
+        geometry = new THREE.CubeGeometry( 25, 25, 25 );
+
+        // this is all we need to be able to click and move camera
+        controls = new THREE.OrbitControls( camera );
+        // =======================================================
+
+        for ( var i = 0; i < 600; i ++ ) {
+
+          var points = [
+            new THREE.Vector3( -12.556202011182904, -6.6237210761755705, 11.476452415809035 ),
+            new THREE.Vector3( -26.308831991627812, -36.702050315216184, -65.70204044692218 ),
+            new THREE.Vector3( 30.030598351731896, 53.670027665793896, -48.4273636713624 ),
+            new THREE.Vector3( -91.64749449118972, 86.79489707574248, -39.410504000261426 ),
+            new THREE.Vector3( -9.040775801986456, 24.351109005510807, -25.116276880726218 ),
+            new THREE.Vector3( 45.43574578128755, 91.02062359452248, -22.751434659585357 ),
+            new THREE.Vector3( 95.66223728470504, 46.15802983753383, 15.478686103597283 ),
+            new THREE.Vector3( 40.25877616368234, 69.51988283544779, -17.296824790537357 ),
+            new THREE.Vector3( -44.74278939887881, 80.29115716926754, -75.00841468572617 ),
+            new THREE.Vector3( -89.60328730754554, 74.49235524982214, 47.89038090966642 ),
+            new THREE.Vector3( 97.9008749127388, -44.629028998315334, -52.1704429294914 ),
+            new THREE.Vector3( -50.608135061338544, 24.322520522400737, -82.82752600498497 ),
+            new THREE.Vector3( 25.44669136404991, -54.02610534802079, -38.45692528411746 ),
+            new THREE.Vector3( -82.40420743823051, -40.75323059223592, 76.98600050061941 ),
+            new THREE.Vector3( -39.261171920225024, 60.10815342888236, -73.79144192673266 ),
+          ];
+
+            geometry = new THREE.ConvexGeometry( points );
+            material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading });
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.2;
+
+            mesh.position.x = Math.random() * 1500 - 750;
+            mesh.position.y = Math.random() * 1500 - 750;
+            mesh.position.z = Math.random() * 1500 - 750;
+
+            mesh.rotation.x = Math.random() * 2 * Math.PI;
+            mesh.rotation.y = Math.random() * 2 * Math.PI;
+
+            scene.add(mesh);
+            cubesArray.push( mesh );
+
+          }
+
+        ///////////background particles/////////////
+
+        backGroundies = new THREE.Geometry();
+        for ( i = 0; i < 5000; i ++ ) {
+          var vertex = new THREE.Vector3();
+          vertex.x = 1000 * Math.random() - 500;
+          vertex.y = 1000 * Math.random() - 500;
+          vertex.z = 1000 * Math.random() - 500;
+          backGroundies.vertices.push( vertex );
+        }
+        material = new THREE.ParticleBasicMaterial( { size: 5, sizeAttenuation: false, transparent: true } );
+        material.color.setHex( 0x99FFFF );
+        particles = new THREE.ParticleSystem( backGroundies, material );
+        particles.sortParticles = true;
+        scene.add( particles );
+        particlesArray.push( particles );
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+       }
+
+
+      function draw() {
+        requestAnimationFrame( draw );
+
+        controls.update();
+
+        try {
+          analyser.getByteFrequencyData(frequencyData)
+        }
+        catch(err) {
+          frequencyData = [0]
+        }
+
+
+        freqSum = frequencyData.reduce(function(a, b) {
+          return a + b;
+        }, 0);
+
+          // console.log(frequencyData);
+
+         for ( var i = 0; i < cubesArray.length; i ++ ) {
+            camera.position.z = 150;
+            cubesArray[i].position.x = (frequencyData[i] / 10)
+            cubesArray[i].position.y = (frequencyData[i] / 10)
+            cubesArray[i].position.z = (frequencyData[i] / 10)
+            // if (freqSum > 60000) {
+            //   for (var x = 0; x < particlesArray.length; x++) {
+            //     debugger
+            //     particlesArray[x].position.x = (frequencyData[i] * getRandomInt(1,5))
+            //     particlesArray[x].position.y = (frequencyData[i] * getRandomInt(1,5))
+            //     particlesArray[x].position.z = (frequencyData[i] * getRandomInt(1,5))
+            //     // camera.position.z = 2000;
+            //     // camera.position.x = (frequencyData[i] * getRandomInt(200,600))
+            //     // camera.position.y = (frequencyData[i] * getRandomInt(200,600))
+            //   }
+            // }
+
+         }
+
+        camera.position.x = Math.sin( Date.now() * 0.0005 ) * 5;
+
+        renderer.render( scene, camera );
+
+     }
+
+      visualSetup();
+      draw();
+
+
+
+})
+
+    </script>
+  </div>
+
+	<div id="hidden-container">
+		<div class="flex-container-left">
+			<div class="sidebar">
+
+				<div class="user">
+
+					<div class="user-photo">
+							<img class="user-photo-img" src="./Beatnik_files/14925339_10102296278576284_1847418274623777344_n.jpg">
+					</div>
+
+					<div class="user-name">
+						<h1>basinpup</h1>
+						<button id="down-arrow">⌄</button>
+					</div>
+
+
+					<div class="playlists-header">P L A Y L I S T S</div>
+				</div>
+
+				<div class="user-playlists">
+					<table>
+								<tbody><tr><td class="user-playlist" id="spotify:user:cannondale12:playlist:5gDHi21qoyYA1M31o86XYl">
+									<div class="playlist-table-data">♫ 100 greatest songs of 2016</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:0zqxTqc0pbQMJCybwShqjk">
+									<div class="playlist-table-data">♫ Porcupine Tree – Signify (Remaster)</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:10PnffybsRKF4VTmNEbCUm">
+									<div class="playlist-table-data">♫ Porcupine Tree – Coma Divine (Remaster)</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:3Q41yOsQ0KVwm8EEOX5y5S">
+									<div class="playlist-table-data">♫ Porcupine Tree – In Absentia</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:6roQJFtBgBd68Xz5klFNm7">
+									<div class="playlist-table-data">♫ Porcupine Tree – Deadwing (Intl Download)</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:3GFqaJo4nu75Iu5kkZM7x4">
+									<div class="playlist-table-data">♫ Porcupine Tree – The Incident</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:7xnlHlmkpgrK4xQ3L8ovi9">
+									<div class="playlist-table-data">♫ Opeth – Blackwater Park</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:3tZEnqLKNJDtrWkasRCB2m">
+									<div class="playlist-table-data">♫ Opeth – The Roundhouse Tapes</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:2oOisbjV9RlWTEjBFR5SIz">
+									<div class="playlist-table-data">♫ Opeth – Deliverance &amp; Damnation Remixed</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:20YRB21Hq7QcV8JoNNwKfA">
+									<div class="playlist-table-data">♫ Opeth – Sorceress</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:3Wz281BYg41uOv30Z2kRPF">
+									<div class="playlist-table-data">♫ The Dear Hunter – Act III: Life And Death</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:2vsKGZi4NXaxykKflaGBiF">
+									<div class="playlist-table-data">♫ The Dear Hunter – The Color Spectrum The Complete Collection</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:6Q6qZoEUFWt2UMf4xYvMgk">
+									<div class="playlist-table-data">♫ The Dear Hunter – Act Iv: Rebirth in Reprise</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:5brGnXgBGQwL9jMklNduEq">
+									<div class="playlist-table-data">♫ The Dear Hunter – Act V: Hymns with the Devil in Confessional</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:3ue6aM4xQgJSQ2DHjdrmp8">
+									<div class="playlist-table-data">♫ Editors' Picks - October 2016 (2)</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:basinpup:playlist:2hR7LY2pnlaFlmpWgFnGlh">
+									<div class="playlist-table-data">♫ Starred</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:kent1337:playlist:6IjDl5eRczFdgZkKYXhuHZ">
+									<div class="playlist-table-data">♫ ChillStep</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:spotify:playlist:3sB6WApTxgNdDR3UcPQDOK">
+									<div class="playlist-table-data">♫ Jazz For Sleep</div>
+								</td></tr>
+								<tr><td class="user-playlist" id="spotify:user:spotify:playlist:3vyS89PZHAELXfKFT99aBK">
+									<div class="playlist-table-data">♫ Metal Domination</div>
+								</td></tr>
+					</tbody></table>
+				</div>
+
+
+
+				<div class="user-spotify-player">
+						<div class="audio-player">
+							<div id="player-head">
+								<img id="player-art" src="./Beatnik_files/5a609c7f19aeda2908311276e35557eed15d0e26" style="width: 25%">
+							   <div id="mep_0" class="mejs-container svg mejs-audio" style="width: 300px; height: 70px;"><div class="mejs-inner"><div class="mejs-mediaelement"><audio id="audio-player" crossorigin="anonymous" src="https://p.scdn.co/mp3-preview/33d620e9e6fc1896f1c8bd6292b325f05030aad1" type="audio/mp3"></audio></div><div class="mejs-layers"><div class="mejs-poster mejs-layer" style="display: none; width: 300px; height: 70px;"></div></div><div class="mejs-controls"><div class="mejs-button mejs-playpause-button mejs-play"><button type="button" aria-controls="mep_0" title="Play/Pause" aria-label="Play/Pause"></button></div><div class="mejs-time-rail" style="width: 0px;"><span class="mejs-time-total" style="width: 0px;"><span class="mejs-time-buffering" style="display: none;"></span><span class="mejs-time-loaded" style="width: 1.56522px;"></span><span class="mejs-time-current" style="width: 0px;"></span><span class="mejs-time-handle" style="left: -5px;"></span><span class="mejs-time-float" style="display: none; left: 86px;"><span class="mejs-time-float-current">00:12</span><span class="mejs-time-float-corner"></span></span></span></div></div><div class="mejs-clear"></div></div></div>
+								 <h2>100 greatest songs of 2016</h2>
+							</div>
+						  <ul id="playlist">
+								<li class="track"><a id="https://p.scdn.co/mp3-preview/33d620e9e6fc1896f1c8bd6292b325f05030aad1" class="track"> A Tribe Called Quest: We The People....</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/cb4e30b586861e4ec542feba233502c6ba4f0d28" class="track"> Santigold: Can't Get Enough Of Myself (feat. B.C)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/5122001bc4c0d489b619ecc60531e04d1ed27955" class="track"> Amber Arcades: Turning Light</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/bf7fa0ddc14ca6d4bf8b290623b331c11f4d32fb" class="track"> Suede: When You Are Young</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/7c9654bda966085cd96953fdfbd02fd10f648ba0" class="track"> Bat For Lashes: Joe's Dream</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/9b8984f20f8dec795a58804c252e24668675cf88" class="track"> The Last Shadow Puppets: Miracle Aligner</a></li> 
+	<li class="track"><a id="" class="track"> The War On Drugs: Touch of Grey</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/2b200d6186f175f4fda615c9bb46da9d562663c3" class="track"> De La Soul: Pain</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c262cdb9ff193c2d265b082434fb7925c7f2c642" class="track"> PJ Harvey: The Community Of Hope</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/6f4e9b43b064e33b5c6e90e20b0200fc268ed90e" class="track"> Lou Rhodes: All I Need</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/168b3cbe7b1e7224ca297b757b6c9b35fb176629" class="track"> DIIV: Under the Sun</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/1ee09b6c4a567182e46d505ab9197f133132ddc1" class="track"> NAO: Fool to Love</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c5314f821141c3addc97c843b245ab94f5331a90" class="track"> Gregory Porter: Don’t Lose Your Steam</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/50c3ef00ebfa5dbedcccda6605fce4228abe2c3a" class="track"> Sia: The Greatest</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/2b8dba4ddb74c9feff56fb355ab0b27bd5a94a7e" class="track"> Two Door Cinema Club: Are We Ready? (Wreck)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c2a4822c1d4ce4b88ce70551bbdf93dc6043cba9" class="track"> Michael Kiwanuka: Black Man In A White World</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c1a247ae5a6e0396724036c30c00705fbb96ae4e" class="track"> Francis and the Lights: Friends (feat. Bon Iver)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/dff98da0fd864bf3ca89f4b36cac79baf2724d94" class="track"> Temple Of The Dog: Black Cat - Demo</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c5b0b198ee3f045960106e9957550e4610555d7d" class="track"> Radiohead: Burn the Witch</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/d2c8c8a735fc3f02bc696997d913aaa55c6f1542" class="track"> Little Scream: Love as a Weapon</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ebd21544594ced1bdbebe96f1d0e4227fcf12d6d" class="track"> Amber Arcades: Fading Lines</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/64b698cb4eb9db871580a13d3c734bfd437c587e" class="track"> C Duncan: A Year Or So</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ac8445a344b7fcfcb42d75924f0f813f3b902e6e" class="track"> Låpsley: Operator (DJ Koze Radio Edit)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/165c5fd0eaf175e516bc0376fcba656af198338d" class="track"> The Tallest Man On Earth: Rivers</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c39a9e1209240268b19b0cbddc23444fb809e42a" class="track"> PJ Harvey: Guilty</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/34c989e5a4f8a3ae41ce77bd06bc32d5a3126a48" class="track"> Richard Ashcroft: Hold On</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/cd5173acb956b9f442c67bafd2ec637a898ab172" class="track"> Twenty One Pilots: Heathens</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/1f751221f8b09ebada5b55409ed909a7e662f98e" class="track"> Hooverphonic: Badaboum (Alle Farben Remix) - Radio Edit</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/303ec0c0ac9c4437142741cc32b0ad248c82ce3b" class="track"> Anderson .Paak: Am I Wrong</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/a82a7322c5d8de5f5d9f4227bb69a4dccd517279" class="track"> Kungs: This Girl (Kungs Vs Cookin' On 3 Burners) - Extended</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ce6a13fe9e04f01cd5ca8af72e8e614d80efb56d" class="track"> Tindersticks: Were We Once Lovers?</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/5ab28a352f14f04b924049e72f1dd60815a37b73" class="track"> Katie Gately: Tuck</a></li> 
+	<li class="track"><a id="" class="track"> Band of Horses: Casual Party</a></li> 
+	<li class="track"><a id="" class="track"> The Last Shadow Puppets: Aviation</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/4ecdaeceea6a47f68349d2e5a5a940ae962ce45f" class="track"> Macklemore &amp; Ryan Lewis: Dance Off (feat. Idris Elba &amp; Anderson .Paak)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/1dc49acc43a275a5b6eb669039802314d44ba625" class="track"> Richard Ashcroft: This Is How It Feels</a></li> 
+	<li class="track"><a id="" class="track"> The Last Shadow Puppets: Bad Habits</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/68d5c962345a441a836b8d390f16979b3238fd9e" class="track"> HONNE: Gone Are The Days</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/719b1f3b6667a8fd82202e11d6955e30693c41bd" class="track"> Warhaus: The Good Lie</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/dda22455736c86d14e7d9384ac3b44bc5ef2931e" class="track"> NAO: Bad Blood</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/a05324e207edadbb04d42840123431b9706e25cc" class="track"> DIIV: Take Your Time</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/10fa943d5efe2e2428137922cca0920657504b8e" class="track"> PJ Harvey: The Wheel</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/8cb56fe8aa13f55084c70e8ee993c46847698a84" class="track"> Thijs Boontjes Dans- en Showorkest: Alleen Naar De Kermis</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/2282316c5cd407d3635df6a3195d6f54d0bc4829" class="track"> The Last Shadow Puppets: Everything You’ve Come To Expect</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/658f1da5b806df2d27d2c0e00277cf1988c1d030" class="track"> Suede: Outsiders</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/e3ad9c514069800bece8cefd2bc0731c4566c531" class="track"> MØ: Drum</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/252dd85908110baa9b248b0097aa4a226b2ad730" class="track"> The Stone Roses: All For One</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/cbaa0a1aa8eb02c3d3cf4a8731a9d4251f6d393e" class="track"> Darlyn: Stepping Stone</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/b62d3c2fd029283b1168ac6f568fa66edb3cf125" class="track"> Kaleo: Way Down We Go</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/079681c91a7844804b8808b494748a2ae71a3088" class="track"> SX: Hurts</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/8e5438c9c6dcb29751cded113602810b2f5877a5" class="track"> Laura Mvula: Overcome</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/f0395df0a4112cce857883bde7229bb128087b9e" class="track"> C Duncan: On Course</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/23c5b7e30f1008950c4e27846f58346e91bac689" class="track"> New Model Army: Winter</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/4b40b3fe5c28a965497ab480b83d8762df1889f9" class="track"> Låpsley: Cliff</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/7474fb59617dd0e658a14180fc238eb57b9b113e" class="track"> Agnes Obel: Familiar</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/39c18a93342b841c47f811e2b0ac378779d63a37" class="track"> Howard: Glass</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/d32eb5d8fa827eed5ff4da6a1586007e5a1a04d5" class="track"> Michael Kiwanuka: The Final Frame</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/0d65f4638c75281658c611279a9fc526aadd837a" class="track"> Nick Cave &amp; The Bad Seeds: Jesus Alone</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/14724e172f501da1b520ae9e2c49776ac455bcc2" class="track"> Tindersticks: Hey Lucinda</a></li> 
+	<li class="track"><a id="" class="track"> Ólafur Arnalds: Öldurót - Island Songs IV</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/17769ca023540a039edafc698870bc27bf7fe403" class="track"> Bettie Serveert: Love Sick</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/cf812b964bba639e448a8473a30af5d5298aaa53" class="track"> Låpsley: This Woman's Work (Live from Spotify London)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/d1bc596b41ec34f237e52ab8290c633b25a3769f" class="track"> The Last Shadow Puppets: Is This What You Wanted</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/20e4636a74e7a33b4ac9ca7c780cf158876b00e7" class="track"> Blaudzun: Jupiter</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/2c621b032fbee8693621da872bd8ce69fd35e831" class="track"> Two Door Cinema Club: Bad Decisions</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/49e5408a879c9a664987ddb32e03c8fb5f310b49" class="track"> Amber Arcades: Which Will</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/236c8123b7de13eaad9238b07a24d4dffadea050" class="track"> Emil Landman: Closer</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/e922198e01ae3b8bf47a641e175961de07678449" class="track"> Leonard Cohen: You Want It Darker</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ad61d272e652a5e06b620ac9a7522388d6c4924a" class="track"> Heartracer: Hollow</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/9584d95565efa5cce031528e5a578f5fc3fde0d6" class="track"> Nick Cave &amp; The Bad Seeds: I Need You</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/a0e187665ae16f3c1b3f097a792224a3f3e10eec" class="track"> Agnes Obel: It's Happening Again</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/369e0746d494697766899175810a5379a80f77fa" class="track"> Beck: Wow</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/f0c77c99936ef806f838bcbaa918e03d0cbfc8f2" class="track"> Bewilder: Forza (It Is)</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/73673b058323a3da89d9e8c8a90c41ae997bdfad" class="track"> White Lies: Take It Out On Me</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/7295bcf671f1445413dfa3cd2632c803fc3cad30" class="track"> Band of Horses: Casual Party</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/d2da58e1f0faaf57031f026be4dfd1326d172dfd" class="track"> The 1975: Love Me</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/55803470cdf6b4bd289fee86c755fc0587091260" class="track"> Parquet Courts: Dust</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/1f5f24f8f0dfa6d3b7baea9c5fa9c45278abbe35" class="track"> Panic! At The Disco: Victorious</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/55b10e51a4c3135e85919d61dee3d26fb5038acc" class="track"> Mumford &amp; Sons: There Will Be Time</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ce196a6b88f1c9fcb6bf01b89186508cfca6a75f" class="track"> Miike Snow: Genghis Khan</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/e9f1230c639eefcc0bff202867b47613bead0375" class="track"> Yeasayer: I Am Chemistry</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/a73451291399b823c9f1b36d2f507dd0e5052c97" class="track"> Father John Misty: Real Love Baby</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/eb1dc68b2fb35905f059821b1dde3d81fde06706" class="track"> M83: Do It, Try It</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/bef65a1be5fc98be2139ee86702774205d019d3d" class="track"> Kings of Leon: Waste A Moment</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/adbdcc68aa1778df9414acbe5190a2d3bda5ff41" class="track"> DMA'S: Lay Down</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/018fda4271d9e5ab9f8d80a1314c888cbcc2ac1e" class="track"> Dazzled Sticks: Dans</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/6205e3706cb2859ae208f87dae3e3c4d12ee87c8" class="track"> Car Seat Headrest: Fill in the Blank</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c8788266721b968d0fa982a11a5ad1f46e7850da" class="track"> Blaudzun: Between A Kiss And A Sorry Goodbye</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/8a17974e9e7b565996055f4c6d0d0f9d45aee429" class="track"> Whitney: No Woman</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/418a6b2d206e2ebee3baa3c3fa34e70c825f4fd4" class="track"> Angel Olsen: Shut Up Kiss Me</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/fb91668430aa405bcc6b91b64850f7a5101e7898" class="track"> Michael Kiwanuka: Love &amp; Hate</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/c9d766a90a78ce605b3d56cd0b4003b440a68596" class="track"> The Slow Show: Ordinary Lives</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/77427000d9cf50c20df61dd25dbd597ac69134ed" class="track"> Unknown Mortal Orchestra: First World Problem</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/ef52161d4d784b6bc59f4966f0ad22ae41bc416d" class="track"> Dinosaur Jr.: Tiny</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/4cde5b5777a9d9b075885327caf38cd79eb3878e" class="track"> Pixies: Tenement Song</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/cbd089b59f8019f0ecdf9139758dec2708955334" class="track"> Nick Cave &amp; The Bad Seeds: Rings of Saturn</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/28f12039d62a2f6d3ac3a639577d6123376edf9a" class="track"> Cloud Nothings: Modern Act</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/68003fd8fdee17872212ec573d9a991ece1d83d8" class="track"> The Veils: Low Lays the Devil</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/1f6404e198f6b77afb16c1e4e87815068ee57c2c" class="track"> Kate Tempest: Don't Fall In</a></li> 
+	<li class="track"><a id="https://p.scdn.co/mp3-preview/19607849c386460b13edd8f84af4eeb709bb249f" class="track"> The Flaming Lips: The Castle</a></li> 
+
+						 </ul>
+					 	</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div id="button-container">
+		<button type="button" id="side-button">&lt;</button>
+	</div>
+
+<canvas width="1917" height="855"></canvas></div>
+
+  
+
+</body></html>
