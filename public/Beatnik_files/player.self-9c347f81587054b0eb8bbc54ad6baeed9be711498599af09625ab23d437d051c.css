@@ -1,5 +1,6 @@
 /** audio player styles **/
 
+
 .audio-player, .audio-player div, .audio-player h2, .audio-player a, .audio-player span, .audio-player button {
   margin: 0;
   padding: 0;
@@ -13,8 +14,6 @@ div.audio-player {
   width: 300px;
   height: 380px;
   background: #282828;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
   overflow: scroll;
 }
@@ -36,14 +35,13 @@ div.audio-player h2 {
 }
 
 .mejs-controls .mejs-play button, .mejs-controls .mejs-pause button {
-  width: 50px;
-  height: 50px;
-  top: 25px;
+  width: 34px;
+  height: 34px;
+  top: 32px;
   left: 7px;
   background: transparent url('/playpause.png') 0 0 no-repeat;
-  background-size: cover;
 }
-.mejs-controls .mejs-pause button { background-position: 0 -48px; }
+.mejs-controls .mejs-pause button { background-position: 0 -35px; }
 
 
 /* time scrubber bar */
@@ -57,16 +55,12 @@ div.audio-player h2 {
   top: 40px;
   left: 79px;
   cursor: pointer;
-  -webkit-border-radius: 0px 0px 2px 2px;
-  -moz-border-radius: 0px 0px 2px 2px;
   border-radius: 0px 0px 2px 2px;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-total {
   background: #565860;
   width: 200px !important;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
 }
 .mejs-controls .mejs-time-rail .mejs-time-loaded {
@@ -74,23 +68,16 @@ div.audio-player h2 {
   left: 0;
   width: 0;
   background: #7b7d82;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
 }
 .mejs-controls .mejs-time-rail .mejs-time-current {
   top: 0;
   left: 0;
   width: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
-  background: #1375ec;
-  background: -webkit-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
-  background: -moz-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
-  background: -o-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
-  background: -ms-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
-  background: linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
+  background: #4687d6;
+  background: -webkit-linear-gradient(top, #4687d6 0%, #ffe699 100%);
+  background: linear-gradient(top, #4687d6 0%, #ffe699 100%);
 }
 
 /* metallic sliders */
