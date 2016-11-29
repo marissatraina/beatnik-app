@@ -36,13 +36,14 @@ div.audio-player h2 {
 }
 
 .mejs-controls .mejs-play button, .mejs-controls .mejs-pause button {
-  width: 34px;
-  height: 34px;
-  top: 32px;
+  width: 50px;
+  height: 50px;
+  top: 25px;
   left: 7px;
   background: transparent url('/playpause.png') 0 0 no-repeat;
+  background-size: cover;
 }
-.mejs-controls .mejs-pause button { background-position: 0 -35px; }
+.mejs-controls .mejs-pause button { background-position: 0 -48px; }
 
 
 /* time scrubber bar */
