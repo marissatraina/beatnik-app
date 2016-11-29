@@ -81,6 +81,20 @@ button#spotify-sign-in:active {
   width: 300px;
   display: flex;
   height: 12%;
+  z-index: 2;
+}
+
+div#drop-down-container {
+  display: inline-block;
+  width: 20%;
+  z-index: 3;
+  align-content: center;
+}
+
+div#logout-drop-down {
+  width: 68px;
+  background-color: rgba(238, 242, 247, 0.45);
+  border-radius: 10px 10px 10px 10px;
 }
 
 .user-photo {
@@ -97,38 +111,32 @@ img.user-photo-img {
 }
 
 .user-name {
-  display: inline-block;
+  display: flex;
   padding-left: 5px;
   padding-top: 0px;
   width: 80%;
 }
 
 .user-name h1 {
-  display: inline;
+  display: inline-block;
   font-family: 'Droid Serif', sans-serif;
   font-size: 25px;
 }
 
-.log-out-button-container {
-  position: fixed;
-  top: 60px;
-  width: 300px;
-  background-color: #282828;
-  border: none;
-  z-index: 1;
-}
-
 .log-out-button {
-  border-radius: 30px 30px 30px 30px;
+  border-radius: 5px 5px 5px 5px;
   border: none;
-  background-color: #1db955;
+  background-color: rgba(238, 242, 247, 0);
   color: white;
   outline: none;
   margin-left: 2px;
+  width: 100%;
+  padding: 0;
+  margin-left: 0;
 }
 
 .log-out-button:hover {
-  background: lighten(#1db955, 7%);
+  color: 	#91eeb3;
   transform: scale(1.025);
   cursor: pointer;
 }
@@ -141,11 +149,12 @@ img.user-photo-img {
 .playlists-header {
   color: white;
   top: 65px;
+  left: 0;
   width: 300px;
   position: fixed;
   background-color: #282828;
   border: none;
-  z-index: 1;
+  z-index: -1;
   font-weight: light;
   font-size: 1.5em;
   text-align: center;
@@ -193,7 +202,7 @@ td.user-playlist {
 }
 
 .flex-container-left {
-  height:100%;
+  height: 100%;
   width: 300px;
   display: flex;
   justify-content: left;
@@ -201,7 +210,6 @@ td.user-playlist {
   color: white;
   overflow-x: hidden;
   overflow-y: hidden;
-  max-height: 100vh;
 }
 
 
@@ -253,14 +261,6 @@ button#side-button:hover {
 button#side-button:active {
   border: none;
   outline: none;
-}
-
-#wrapper {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-
 }
 
 .flex-col-container {
