@@ -1,0 +1,197 @@
+<div class="visual">
+<style>
+#b {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #2a1644, #06210b);
+}
+</style>
+<canvas id="b">
+
+<script>
+$(document).ready(function() {
+
+  // audio init
+  ctx = new AudioContext();
+  audio = document.getElementById('audio-player');
+  audioSrc = ctx.createMediaElementSource(audio);
+  analyser = ctx.createAnalyser();
+  audioSrc.connect(analyser);
+  audioSrc.connect(ctx.destination);
+  frequencyData = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(frequencyData);
+
+  c = b.getContext('2d');
+  MAX = 360;
+
+  onload = function update(event) {
+
+    requestAnimationFrame(update);
+    analyser.getByteFrequencyData(frequencyData);
+
+    function getPeaks(data) {
+      // What we're going to do here, is to divide up our audio into parts.
+      // We will then identify, for each part, what the loudest sample is in that
+      // part.
+      // It's implied that that sample would represent the most likely 'beat'
+      // within that part.
+      // Each part is 0.5 seconds long - or 22,050 samples.
+      // This will give us 60 'beats' - we will only take the loudest half of
+      // those.
+      // This will allow us to ignore breaks, and allow us to address tracks with
+      // a BPM below 120.
+      var partSize = 22050,
+          parts = data[0].length / partSize,
+          peaks = [];
+
+      for (var i = 0; i < parts; i++) {
+        var max = 0;
+        for (var j = i * partSize; j < (i + 1) * partSize; j++) {
+          var volume = Math.max(Math.abs(data[0][j]), Math.abs(data[1][j]));
+          if (!max || (volume > max.volume)) {
+            max = {
+              position: j,
+              volume: volume
+            };
+          }
+        }
+        peaks.push(max);
+      }
+
+      // We then sort the peaks according to volume...
+      peaks.sort(function(a, b) {
+        return b.volume - a.volume;
+      });
+
+      // ...take the loundest half of those...
+      peaks = peaks.splice(0, peaks.length * 0.5);
+
+      // ...and re-sort it back based on position.
+      peaks.sort(function(a, b) {
+        return a.position - b.position;
+      });
+
+      return peaks;
+    }
+
+    function getIntervals(peaks) {
+
+      // What we now do is get all of our peaks, and then measure the distance to
+      // other peaks, to create intervals.  Then based on the distance between
+      // those peaks (the distance of the intervals) we can calculate the BPM of
+      // that particular interval.
+      // The interval that is seen the most should have the BPM that corresponds
+      // to the track itself.
+      var groups = [];
+
+      peaks.forEach(function(peak, index) {
+        for (var i = 1; (index + i) < peaks.length && i < 10; i++) {
+          var group = {
+            tempo: (60 * 44100) / (peaks[index + i].position - peak.position),
+            count: 1
+          };
+
+          while (group.tempo < 90) {
+            group.tempo *= 2;
+          }
+
+          while (group.tempo > 180) {
+            group.tempo /= 2;
+          }
+
+          group.tempo = Math.round(group.tempo);
+
+          if (!(groups.some(function(interval) {
+            return (interval.tempo === group.tempo ? interval.count++ : 0);
+          }))) {
+            groups.push(group);
+          }
+        }
+      });
+      return groups;
+    }
+
+    var buffer = event.renderedBuffer;
+    var peaks = getPeaks([buffer.getChannelData(0), buffer.getChannelData(1)]);
+    var groups = getIntervals(peaks);
+
+    debugger;
+
+    // init
+    if (!window.time) {
+      // time, frames, and vines init
+      time = 0;
+      trackTime = 0;
+      frame = 0;
+      timeNextFrame = 0;
+      vines = [{x:0, y:0, a:0, ai:0, w:8, p:[], l:MAX*60}];
+    }
+
+    if (frequencyData[0] > 0) {
+      trackTime = 1;
+    } else {
+      trackTime = 0;
+    }
+
+    // time update
+    currentTime = performance.now() / 1000;
+    if (trackTime == 1) {
+      while(time < currentTime) {
+        while(time < timeNextFrame) {
+          time += 1 / 16384;
+        }
+        frame++;
+        timeNextFrame += 1/60;
+
+        // update visuals
+        vines = vines.filter(v => v.l--);
+        vines.forEach(v => {
+          dx = Math.cos(v.a) * v.w / 2;
+          dy = Math.sin(v.a) * v.w / 2;
+          v.x += dx;
+          v.y += dy;
+          v.a += v.ai / v.w / 2;
+          v.p.splice(0, v.p.length - v.l);
+          v.p.splice(0, v.p.length - 60 * 5);
+          v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
+          // frame % num represents beat
+          // i.e. if tempo is 60bpm, then num = 60
+          // (frame % 60 == 0)
+          if (frame % 15 == 0) {
+            v.ai = Math.random() - 0.5;
+          }
+          if (v.w > 1 && Math.random() < v.l / 16384 / 2) {
+            vines.push({x:v.x, y:v.y, a:v.a, ai:v.ai, w:v.w / 2, p:[], l:Math.min(v.l, 0|v.w * 32 * (1 + Math.random()))});
+          }
+
+        })
+      }
+    }
+
+    // render visual
+    H = b.height = 512;
+    W = b.width = 0 | H * innerWidth / innerHeight;
+    c.translate(W/2, H/2);
+    c.shadowBlur = 24;
+    vines.forEach(v => {
+      c.shadowColor = 
+      c.strokeStyle = 'hsl('+(v.a*60|0)+',100%,'+(60+v.w*5)+'%)';
+      if (v.w == 8) {
+        c.translate(-v.x, -v.y);
+      }
+      c.beginPath();
+      line = v.p.length - 1;
+      for(i = line; p = v.p[i]; i--) {
+        c.lineTo(p.x, p.y);
+      }
+      c.stroke();
+      
+      })
+    }
+})
+
+</script>
+</div>
