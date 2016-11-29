@@ -84,12 +84,12 @@ div.audio-player h2 {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: #4687d6;
-  background: -webkit-linear-gradient(top, #4687d6 0%, #ffe699 100%);
-  background: -moz-linear-gradient(top, #4687d6 0%, #ffe699 100%);
-  background: -o-linear-gradient(top, #4687d6 0%, #ffe699 100%);
-  background: -ms-linear-gradient(top, #4687d6 0%, #ffe699 100%);
-  background: linear-gradient(top, #4687d6 0%, #ffe699 100%);
+  background: #1375ec;
+  background: -webkit-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
+  background: -moz-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
+  background: -o-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
+  background: -ms-linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
+  background: linear-gradient(top, 	#ffcc33 0%, #1375ec 100%);
 }
 
 /* metallic sliders */
