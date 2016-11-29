@@ -98,7 +98,7 @@ img.user-photo-img {
 }
 
 .user-name {
-  display: inline-block;
+  display: flex;
   padding-left: 5px;
   padding-top: 0px;
   width: 80%;
@@ -110,27 +110,17 @@ img.user-photo-img {
   font-size: 25px;
 }
 
-.log-out-button-container {
-  position: fixed;
-  top: 60px;
-  width: 300px;
-  background-color: #282828;
-  border: none;
-  z-index: 1;
-}
-
 .log-out-button {
-  border-radius: 30px 30px 30px 30px;
+  border-radius: 5px 5px 5px 5px;
   border: none;
-  background-color: #1db955;
   color: white;
   outline: none;
-  margin-left: 2px;
+  margin: 0;
+  background-color: rgba(235, 242, 249, 0);
 }
 
 .log-out-button:hover {
-  background: lighten(#1db955, 7%);
-  transform: scale(1.025);
+  color: #91eeb3;
   cursor: pointer;
 }
 
@@ -146,10 +136,10 @@ img.user-photo-img {
   position: fixed;
   background-color: #282828;
   border: none;
-  z-index: 1;
   font-weight: light;
   font-size: 1.5em;
   text-align: center;
+  z-index: -1;
 }
 
 table {
@@ -303,8 +293,9 @@ button#down-arrow {
   border: none;
   background-color: #282828;
   font-size: 2em;
-  height: 50px;
+  height: 30px;
   color: #4687d6;
+  margin-top: 6px;
 }
 
 button#down-arrow:hover {
@@ -334,4 +325,20 @@ div#psuedo-body {
   height: 100vh;
   width: 100vh;
   overflow: hidden;
+}
+
+div#drop-down-container {
+  width: 70px;
+}
+
+div#logout-drop-down {
+  margin-left: 6px;
+  width: 60px;
+  background-color: rgba(218, 229, 241, .45);
+  border-radius: 3px 3px 3px 3px;
+  padding-bottom: 2px;
+}
+
+div#logout-drop-down.hidden{
+  display: none;
 }

@@ -16,7 +16,12 @@
 
 					<div class="user-name">
 						<h1><%= @spotify_user.id %></h1>
-						<button id="down-arrow">&#8964;</button>
+						<div id="drop-down-container">
+							<button id="down-arrow">&#8964;</button>
+							<div id="logout-drop-down" class="hidden">
+								<%= button_to("LOG OUT", '/logout', method: "delete", class: "log-out-button")%>
+							</div>
+						</div>
 					</div>
 
 
