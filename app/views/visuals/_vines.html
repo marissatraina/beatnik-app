@@ -8,16 +8,11 @@
   background: radial-gradient(circle, #2a1644, #06210b);
 }
 </style>
-<canvas id="b">
+<canvas id="b"></canvas>
 
 <script id="vines-script">
+
 $(document).ready(function() {
-  // debugger;
-  // audio init
-  // var ctx = new AudioContext();
-  // var audio = document.getElementById('audio-player');
-  // var audioSrc = ctx.createMediaElementSource(audio);
-  // var analyser = ctx.createAnalyser();
   audioSrc.connect(analyser);
   audioSrc.connect(ctx.destination);
   var frequencyData = new Uint8Array(analyser.frequencyBinCount);
@@ -30,7 +25,6 @@ $(document).ready(function() {
   var buttonClick = false;
 
   $(document).on("click", "button.visual-down-arrow", function(event) {
-    // debugger;
     buttonClick = true;
   })
 
@@ -130,4 +124,3 @@ $(document).ready(function() {
 })
 
 </script>
-</canvas>

@@ -26,6 +26,8 @@ class UsersController < ApplicationController
       render :partial => '/visuals/sine'
     elsif params[:visual] == 'vines'
       render :partial => '/visuals/vines'
+    else
+      render :partial => '/visuals/spacecomb'
     end
   end
 
