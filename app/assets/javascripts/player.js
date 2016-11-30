@@ -17,7 +17,11 @@ $(document).ready(function() {
 	});
 
 	var $styles = $("div#styles-dropdown");
-		$("button#styles-button").click(function() {
-			$styles.toggleClass("hidden");
-		})
+	$("button#styles-button").click(function() {
+		$styles.toggleClass("hidden");
+	});
+
+	$('div#sidebar').scroll(function() {
+    didScroll = true;
+	});
 });

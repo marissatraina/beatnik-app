@@ -73,7 +73,6 @@ button#spotify-sign-in:active {
 .sidebar {
   width: 300px;
   height: 100%;
-  overflow: hidden;
 }
 
 .user {
@@ -244,6 +243,7 @@ button#side-button {
   left: 315px;
   position: fixed;
   z-index: 2;
+  border-radius: 10px 10px 10px 10px;
 }
 
 button#side-button:hover {
@@ -394,6 +394,7 @@ button#styles-button {
   outline: none;
   display: inline;
   z-index: 2;
+  border-radius: 5px 5px 5px 5px;
 }
 
 button#styles-button:hover {
