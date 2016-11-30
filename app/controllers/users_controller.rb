@@ -21,7 +21,12 @@ class UsersController < ApplicationController
   end
 
   def visual_selector
-    render :partial => '/visuals/sine'
+    # binding.pry
+    if params[:visual] == 'sine'
+      render :partial => '/visuals/sine'
+    elsif params[:visual] == 'vines'
+      render :partial => '/visuals/vines'
+    end
   end
 
   def index_params

@@ -12,12 +12,12 @@
 
 <script id="vines-script">
 $(document).ready(function() {
-
+  // debugger;
   // audio init
-  var ctx = new AudioContext();
-  var audio = document.getElementById('audio-player');
-  audioSrc = ctx.createMediaElementSource(audio);
-  var analyser = ctx.createAnalyser();
+  // var ctx = new AudioContext();
+  // var audio = document.getElementById('audio-player');
+  // var audioSrc = ctx.createMediaElementSource(audio);
+  // var analyser = ctx.createAnalyser();
   audioSrc.connect(analyser);
   audioSrc.connect(ctx.destination);
   var frequencyData = new Uint8Array(analyser.frequencyBinCount);
@@ -30,7 +30,7 @@ $(document).ready(function() {
   var buttonClick = false;
 
   $(document).on("click", "button.visual-down-arrow", function(event) {
-    debugger;
+    // debugger;
     buttonClick = true;
   })
 

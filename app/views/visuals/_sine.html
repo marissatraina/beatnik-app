@@ -2,10 +2,7 @@
 $( document ).ready(function() {
 
       var bg = document.body.style;
-      var ctx = new AudioContext();
-      var audio = document.getElementById('audio-player');
-      var audioSrc = ctx.createMediaElementSource(audio);
-      var analyser = ctx.createAnalyser();
+      
       audioSrc.connect(analyser);
       audioSrc.connect(ctx.destination);
       var frequencyData = new Uint8Array(analyser.frequencyBinCount)
