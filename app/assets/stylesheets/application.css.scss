@@ -181,13 +181,15 @@ td.user-playlist {
   cursor: pointer;
   color: gray;
   font-size: 110%;
+  font-weight: 300;
+  padding-left: 2vh;
 }
 
 .user-spotify-player {
   position: fixed;
   left: 0px;
   bottom: 0px;
-  height: 42%;
+  height: 44%;
   overflow: hidden;
 }
 
