@@ -28,6 +28,8 @@ class UsersController < ApplicationController
       render :partial => '/visuals/spacerecord'
     elsif visual == "midnight-feather"
       render :partial => '/visuals/midnightfeather'
+    elsif visual == "exploding-sun"
+      render :partial => '/visuals/explodingsun'
     end
   end
 

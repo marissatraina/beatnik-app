@@ -1,0 +1,121 @@
+<script id="midnight-feather-script">
+
+$(document).ready(function() {
+
+  // create canvas element
+  var canvasElement = '<canvas id="b" height="512" width="584"></canvas>'
+  $("div#pseudo-body").append(canvasElement);
+
+  // establish audio connection
+  audioSrc.connect(analyser);
+  audioSrc.connect(ctx.destination);
+  var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(frequencyData);
+
+  var c = b.getContext('2d');
+  var MAX = 360;
+  var frameFactor = 15;
+
+  var buttonClick = false;
+
+  $(document).on("click", "ul#styles-list li", function(event) {
+    buttonClick = true;
+  })
+
+  onload = function update(event) {
+
+    if (buttonClick) {
+      return;
+    }
+
+    requestAnimationFrame(update);
+    analyser.getByteFrequencyData(frequencyData);
+    var highFreq = Math.max(...frequencyData);
+    var freqIndex = frequencyData.indexOf(highFreq);
+
+    var color = Math.pow(freqIndex, 4);
+    if (color > 360) {
+      color = 360;
+    }
+
+    var lightness = Math.ceil(highFreq / 3.4);
+
+    // console.log(color);
+    // console.log(lightness);
+
+    // init
+    if (!window.time) {
+      // time, frames, and vines init
+      time = 0;
+      trackTime = 0;
+      frame = 0;
+      timeNextFrame = 0;
+      vines = [{x:0, y:0, a:0, ai:0, w:8, p:[], l:MAX*60}];
+    }
+
+    if (frequencyData[0] > 0) {
+      trackTime = 1;
+    } else {
+      trackTime = 0;
+    }
+
+    // time update
+    var currentTime = performance.now() / 1000;
+    if (trackTime == 1) {
+      while(time < currentTime) {
+        while(time < timeNextFrame) {
+          time += 1 / 16384;
+        }
+        frame++;
+        timeNextFrame += 1/60;
+
+        // update visuals
+        vines = vines.filter(v => v.l--);
+        vines.forEach(v => {
+          dx = Math.cos(v.a) * color / 90;
+          dy = Math.sin(v.a) * color / 90;
+          v.x += dx;
+          v.y += dy;
+          v.a += v.ai / v.w / 2;
+          v.p.splice(0, v.p.length - v.l);
+          v.p.splice(0, v.p.length - 60 * 5);
+          v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
+          // frame % num represents beat
+          // i.e. if tempo is 60bpm, then num = 60
+          // (frame % 60 == 0)
+          if (frame % frameFactor == 0) {
+            v.ai = Math.random() - 0.5;
+          }
+          if (v.w > 1 && Math.random() < v.l / 16384 / 2) {
+            vines.push({x:v.x, y:v.y, a:v.a, ai:v.ai, w:v.w / 2, p:[], l:Math.min(v.l, 0|v.w * 32 * (1 + Math.random()))});
+          }
+
+        })
+      }
+    }
+    
+    // render visual
+    var H = b.height = 512;
+    var W = b.width = 0 | H * innerWidth / innerHeight;
+    c.translate(W/2, H/2);
+    c.shadowBlur = 24;
+    vines.forEach(v => {
+      c.shadowColor = 
+      // color and lightness values taken from frequencyData array
+      c.strokeStyle = 'hsl(' + color + ',100%,' + lightness + '%)';
+      if (v.w == 8) {
+        c.translate(-v.x, -v.y);
+      }
+      c.beginPath();
+      line = v.p.length - 1;
+      for(i = line; p = v.p[i]; i--) {
+        c.lineTo(p.x, p.y);
+      }
+      c.stroke();
+      
+      })
+    }
+    onload();
+})
+
+</script>
