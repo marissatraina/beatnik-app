@@ -1,7 +1,4 @@
 <div id="pseudo-body">
-	<div class="visuals">
-		<%= render :partial => '/visuals/vines' %>
-	</div>
 	<div id="hidden-container">
 		<div class="flex-container-left">
 			<div class="sidebar">
@@ -84,11 +81,14 @@
 			<button type="button" id="styles-button">styles</button>
 			<div id="styles-dropdown" class="hidden">
 				<ul id="styles-list">
-					<li>Space Record</li>
-					<li>Midnight Feather</li>
+					<li class="space-record">Space Record</li>
+					<li class="midnight-feather">Midnight Feather</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
+	<div class="visuals">
+		<%= render :partial => '/visuals/midnightfeather' %>
+	</div>
 </div>

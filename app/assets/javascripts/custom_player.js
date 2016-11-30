@@ -15,9 +15,10 @@ $( document ).ready(function() {
 	        method: 'get',
 	        data: {index : $(this).attr('id')}
 	     }).done(function(response){
-	     	$("ul").append(response);
-	     	$("h2#playing-artist").text($("li.track").first().parent().attr("data-artist-name"))
-	      $("h2#playing-song").text($("li.track").first().parent().attr("data-track-name"))
+	     	$("ul#playlist").append(response);
+	     	$("h2#playing-artist").text($("ul").children().first().attr("data-artist-name"))
+	      $("h2#playing-song").text($("ul").children().first().attr("data-track-name"))
+
 	     	renderPlayer();
 	     })
 	 
@@ -44,6 +45,19 @@ $( document ).ready(function() {
 	 		}
 	 })
 
+	 $(document).on("click", "ul#styles-list li", function(event) {
+	 	event.preventDefault();
+	 	var visualizer = $(this).attr("class");
+	 	$.ajax({
+	 		url: '/users/visual_selector',
+	 		method: 'get',
+	 		data: { visual: visualizer }
+	 	}).done(function(response) {
+	 		$("canvas").remove();
+			$("div.visuals").empty();
+			$("div.visuals").append(response);
+	 	})
+	 })
 
 
 	function renderPlayer(){

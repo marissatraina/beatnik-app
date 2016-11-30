@@ -22,6 +22,15 @@ class UsersController < ApplicationController
     render :partial => '/player/player', locals: { index: @index, spotify_user: @spotify_user }
   end
 
+  def visual_selector
+    visual = params[:visual]
+    if visual == "space-record"
+      render :partial => '/visuals/spacerecord'
+    elsif visual == "midnight-feather"
+      render :partial => '/visuals/midnightfeather'
+    end
+  end
+
   def index_params
     params.permit(:index)
   end
