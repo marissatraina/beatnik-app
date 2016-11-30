@@ -1,18 +1,13 @@
-<style>
-#b {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, #2a1644, #06210b);
-}
-</style>
-<canvas id="b"></canvas>
+<script id="midnight-feather-script">
 
-<script id="vines-script">
 
 $(document).ready(function() {
+
+  // create canvas element
+  var canvasElement = '<canvas id="b" height="512" width="584"></canvas>'
+  $("div#pseudo-body").append(canvasElement);
+
+  // establish audio connection
   audioSrc.connect(analyser);
   audioSrc.connect(ctx.destination);
   var frequencyData = new Uint8Array(analyser.frequencyBinCount);
@@ -24,7 +19,7 @@ $(document).ready(function() {
 
   var buttonClick = false;
 
-  $(document).on("click", "button.visual-down-arrow", function(event) {
+  $(document).on("click", "ul#styles-list li", function(event) {
     buttonClick = true;
   })
 
@@ -66,7 +61,7 @@ $(document).ready(function() {
     }
 
     // time update
-    currentTime = performance.now() / 1000;
+    var currentTime = performance.now() / 1000;
     if (trackTime == 1) {
       while(time < currentTime) {
         while(time < timeNextFrame) {
@@ -121,6 +116,7 @@ $(document).ready(function() {
       
       })
     }
+    onload();
 })
 
 </script>
