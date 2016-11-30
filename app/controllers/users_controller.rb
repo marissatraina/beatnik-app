@@ -9,8 +9,21 @@ class UsersController < ApplicationController
   def index
     auth_username = session[:auth]['uid']
     @spotify_user = RSpotify::User.find(auth_username)
-    # binding.pry
+    @first_playlist = @spotify_user.playlists[0] || ""
+    @album_art_on_load = @first_playlist.tracks[0].album.images[0]["url"] || "" 
     render '/player/index'
+  end
+
+  def playlist_player
+    auth_username = session[:auth]['uid']
+    @spotify_user = RSpotify::User.find(auth_username)
+    @index = index_params[:index]
+    @current_playlist = @spotify_user.playlists[@index.to_i].name
+    render :partial => '/player/player', locals: { index: @index, spotify_user: @spotify_user }
+  end
+
+  def index_params
+    params.permit(:index)
   end
 
 end
