@@ -14,6 +14,9 @@ $( document ).ready(function() {
 	        data: {index : $(this).attr('id')}
 	     }).done(function(response){
 	     	$("ul").append(response);
+	     	$("h2#playing-artist").text($("ul").children().first().attr("data-artist-name"))
+	      $("h2#playing-song").text($("ul").children().first().attr("data-track-name"))
+
 	     	renderPlayer();
 	     })
 	 
@@ -24,6 +27,8 @@ $( document ).ready(function() {
 	 	event.preventDefault();
 	      $("audio").attr({"src" : $(this).attr("id")});
 	      $("#player-art").attr({"src" : $(this).attr("data-img-url")})
+	      $("h2#playing-artist").text($(this).attr("data-artist-name"))
+	      $("h2#playing-song").text($(this).attr("data-track-name"))
 	
 	    }); 
 
