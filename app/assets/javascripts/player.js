@@ -15,4 +15,9 @@ $(document).ready(function() {
 	$("button#down-arrow").click(function() {
 		$dropdown.toggleClass("hidden");
 	});
+
+	var $styles = $("div#styles-dropdown");
+		$("button#styles-button").click(function() {
+			$styles.toggleClass("hidden");
+		})
 });

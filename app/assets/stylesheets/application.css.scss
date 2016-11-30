@@ -234,7 +234,7 @@ div#hidden-container.hidden {
 }
 
 button#side-button {
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.55);
   color: gray;
   border: none;
   font-size: 24px;
@@ -389,4 +389,43 @@ div.song {
 div.artist {
   color: #a0a0a0;
   font-size: 14px;
+}
+
+button#styles-button {
+  background-color: rgba(0, 0, 0, 0.55);
+  color: gray;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+  position: fixed;
+  z-index: 2;
+}
+
+button#styles-button:hover {
+  color: white;
+}
+
+button#styles-button:active {
+  border: none;
+  outline: none;
+}
+
+div#styles {
+  position: fixed;
+  right: 4vh;
+  margin-top: 2vh;
+  z-index: 2;
+}
+
+div#styles-dropdown.hidden {
+  display: none;
+}
+
+div#styles-dropdown {
+
+}
+
+ul#styles-list {
+  list-style-type: none;
 }
