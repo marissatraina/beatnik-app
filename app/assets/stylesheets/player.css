@@ -8,7 +8,7 @@
 }
 
 div.audio-player {
-  padding-top: 25px;
+  padding-top: 0;
   position: relative;
   width: 300px;
   height: 380px;
@@ -30,7 +30,7 @@ div.audio-player h2 {
 /* play/pause control */
 .mejs-controls .mejs-button button {
   cursor: pointer;
-  display: block;
+  display: inline-block;
   position: absolute;
   text-indent: -9999px;
 }
@@ -38,8 +38,8 @@ div.audio-player h2 {
 .mejs-controls .mejs-play button, .mejs-controls .mejs-pause button {
   width: 50px;
   height: 50px;
-  top: 25px;
-  left: 7px;
+  top: 16px;
+  left: 10px;
   background: transparent url('/playpause.png') 0 0 no-repeat;
   background-size: cover;
 }
@@ -150,5 +150,37 @@ ul#playlist{
 }
 
 div#player-head {
-  border-bottom:1px groove black;
+  border-bottom: 1px groove black;
+  height: 80px;
+}
+
+
+h2#playlist-name {
+  margin-left: 80px;
+  margin-top: 50px;
+  color: #a0a0a0;
+  font-weight: 300;
+}
+
+h2#playing-song {
+  margin-left: 80px;
+  margin-top: 0px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+h2#playing-artist {
+  margin-left: 83px;
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: 200;
+  color: #a0a0a0;
+}
+
+img#player-art {
+  border-right: transparent 10px solid;
+}
+
+span.mejs-time-total {
+  right: 0px;
 }

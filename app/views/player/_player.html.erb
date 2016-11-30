@@ -1,7 +1,6 @@
-
 <% spotify_user.playlists[index.to_i].tracks.each_with_index do |track, i| %>
 <a id="<%=track.preview_url%>" class="track">
-	<li data-img-url="<%=track.album.images[0]['url']%>" class="track">
+	<li class="track">
 		<div class="order-num"><%= i + 1%></div>
 		<div class="song">
 			<div class "track"><%= track.name %></div>

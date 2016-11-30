@@ -32,7 +32,7 @@
 					<table>
 						<% if @spotify_user.playlists.length > 0 %>
 							<% @spotify_user.playlists.each_with_index do |playlist, index| %>
-								<tr><td data-first-trck-img="<%=playlist.tracks.first.album.images[0]['url']%>" data-playlist-name="<%=playlist.name%>"  class="user-playlist" id="<%= index %>" 
+								<tr><td data-first-trck-img="<%=playlist.tracks.first.album.images[0]['url']%>" data-playlist-name="<%=playlist.name%>"  class="user-playlist" id="<%= index %>"
 									<div class="playlist-table-data">&#x266B; <%= playlist.name %></div>
 								</td></tr>
 							<% end %>
@@ -47,10 +47,12 @@
 				<div class="user-spotify-player">
 					<% if @spotify_user.playlists.length > 0 %>
 						<div class="audio-player">
+							<h2 id="playing-song"><%= @spotify_user.playlists.first.tracks.first.name %></h2>
+							<h2 id="playing-artist"><%= @spotify_user.playlists.first.tracks.first.artists.first.name %></h2>
+							<h2 id="playlist-name"><%= @spotify_user.playlists.first.name %> by <%= @spotify_user.id %></h2>
 							<div id="player-head">
-								<img id="player-art" src="<%=@album_art_on_load%>" style="width: 25%"/>
-							   <audio id="audio-player" crossorigin="anonymous" src="<%= @first_playlist.tracks.first.preview_url %>" type="audio/mp3" controls="controls"></audio>
-								 <h2><%= @spotify_user.playlists.first.name %></h2>
+								<img id="player-art" src="<%=@album_art_on_load%>" style="width: 25%">
+							  <audio id="audio-player" crossorigin="anonymous" src="<%= @first_playlist.tracks.first.preview_url %>" type="audio/mp3" controls="controls" style="left: 93px;"></audio>
 							</div>
 						  <ul id="playlist">
 								<%= render :partial => '/player/player', locals: { index: "0", spotify_user: @spotify_user }  %>
