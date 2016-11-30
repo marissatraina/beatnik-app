@@ -13,5 +13,12 @@
 
   <body>
     <%= yield %>
+    <script type="text/javascript">
+      // global audio js variables
+      ctx = new AudioContext();
+      audio = document.getElementById('audio-player');
+      audioSrc = ctx.createMediaElementSource(audio);
+      analyser = ctx.createAnalyser();
+    </script>
   </body>
 </html>

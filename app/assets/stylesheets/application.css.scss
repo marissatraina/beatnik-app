@@ -330,12 +330,6 @@ div.audio-player {
   height: 100%;
 }
 
-div#psuedo-body {
-  height: 100vh;
-  width: 100vh;
-  overflow: hidden;
-}
-
 div#drop-down-container {
   width: 70px;
 }
@@ -428,4 +422,13 @@ div#styles-dropdown {
 
 ul#styles-list {
   list-style-type: none;
+}
+
+#b {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #2a1644, #06210b);
 }
