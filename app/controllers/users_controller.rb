@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     auth_username = session[:auth]['uid']
     @spotify_user = RSpotify::User.find(auth_username)
     @first_playlist = @spotify_user.playlists[0] || ""
-    @album_art_on_load = @first_playlist.tracks[0].album.images[0]["url"] || "" 
+    @album_art_on_load = @first_playlist.tracks[0].album.images[0]["url"] || ""
     render '/player/index'
   end
 
@@ -28,6 +28,8 @@ class UsersController < ApplicationController
       render :partial => '/visuals/spacerecord'
     elsif visual == "midnight-feather"
       render :partial => '/visuals/midnightfeather'
+    elsif visual == "lux"
+      render :partial => '/visuals/lux'
     end
   end
 
