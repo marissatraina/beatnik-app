@@ -147,6 +147,10 @@ ul#playlist{
   margin: auto;
   color: white;
   font-size: 12 px;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: inherit;
 }
 
 div#player-head {
@@ -167,6 +171,10 @@ h2#playing-song {
   margin-top: 0px;
   font-size: 14px;
   font-weight: 300;
+  width: 180px;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
 }
 
 h2#playing-artist {
@@ -175,6 +183,10 @@ h2#playing-artist {
   font-size: 12px;
   font-weight: 200;
   color: #a0a0a0;
+  white-space: nowrap;
+  width: 180px;
+  display: block;
+  text-overflow: ellipsis;
 }
 
 img#player-art {
