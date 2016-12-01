@@ -150,7 +150,8 @@ ul#playlist{
   display: block;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: inherit;
+  width: 278px;
+  overflow: hidden;
 }
 
 div#player-head {
@@ -175,6 +176,7 @@ h2#playing-song {
   white-space: nowrap;
   display: block;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 h2#playing-artist {
@@ -195,4 +197,12 @@ img#player-art {
 
 span.mejs-time-total {
   right: 0px;
+}
+
+li.track {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 278px;
+  overflow: hidden;
 }
