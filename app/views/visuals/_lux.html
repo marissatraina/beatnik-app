@@ -147,11 +147,10 @@ $( document ).ready(function() {
               			if (tick < 0) tick = 0;
               			if (delta > 0) {
                       analyser.getByteFrequencyData(frequencyData)
-                      options['horizontalSpeed'] = frequencyData[0]
-                      options['size'] = (frequencyData[50] / 10) + 1
-                      options['verticalSpeed'] = frequencyData[100]
-                      options['sizeRandomness'] = frequencyData[200]
-                      options['turbulence'] = frequencyData[300]
+                      options['positionRandomness'] = frequencyData[0] / 256
+                      options['velocityRandomness'] = frequencyData[0] / 256
+                      options['size'] = ( frequencyData[0] / 16 ) + 1
+                      options['turbulence'] = frequencyData[0] / 256
               				options.position.x = Math.sin(tick * spawnerOptions.horizontalSpeed);
               				options.position.y = Math.sin(tick * spawnerOptions.verticalSpeed);
               				options.position.z = Math.sin(tick * spawnerOptions.horizontalSpeed + spawnerOptions.verticalSpeed) * 5;
