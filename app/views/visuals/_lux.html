@@ -1,93 +1,144 @@
-
-  <body>
-
-    <div id="container"></div>
-    <div id="info">
-      <a href="http://threejs.org" target="_blank">three.js</a> - webgl hemisphere light example -
-      flamingo by <a href="http://mirada.com/">mirada</a> from <a href="http://ro.me">rome</a><br/>
-    </div>
-  </body>
+<script type="x-shader/x-vertex" id="vertexShader">
 
 
 
+    varying vec3 vWorldPosition;
 
-    <script src="http://threejs.org/build/three.min.js"></script>
+    void main() {
 
-    <script src="http://threejs.org/examples/js/Detector.js"></script>
+      vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+      vWorldPosition = worldPosition.xyz;
 
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 
-    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+    }
 
+</script>
 
-    <script type="x-shader/x-vertex" id="vertexShader">
+<script type="x-shader/x-fragment" id="fragmentShader">
 
+  uniform vec3 topColor;
+  uniform vec3 bottomColor;
+  uniform float offset;
+  uniform float exponent;
 
+  varying vec3 vWorldPosition;
 
-      varying vec3 vWorldPosition;
+  void main() {
 
-      void main() {
+    float h = normalize( vWorldPosition + offset ).y;
+    gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
 
-        vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
-        vWorldPosition = worldPosition.xyz;
+  }
 
-        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+</script>
 
-      }
+<script id="space-record-script">
+$( document ).ready(function() {
 
-    </script>
+      var bg = document.body.style;
 
-    <script type="x-shader/x-fragment" id="fragmentShader">
+      audioSrc.connect(analyser);
+      audioSrc.connect(ctx.destination);
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount)
+      analyser.getByteFrequencyData(frequencyData)
 
-      uniform vec3 topColor;
-      uniform vec3 bottomColor;
-      uniform float offset;
-      uniform float exponent;
+      // three.js globals
+      var particlesArray = []
+      var camera, scene, renderer, tick = 0,  clock = new THREE.Clock(true),
+          geometry, controls, material, options, spawnerOptions, particleSystem;
 
-      varying vec3 vWorldPosition;
+      function visualSetup() {
+        //getting correct sizing based on the browser window (more adaptable)
+        var W = window.innerWidth, H = window.innerHeight;
 
-      void main() {
+        renderer = new THREE.WebGLRenderer( { antialias: true });
 
-        float h = normalize( vWorldPosition + offset ).y;
-        gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize( W, H );
 
-      }
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
 
-    </script>
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.renderReverseSided = false;
 
-    <script>
-
-      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-      var camera, scene, renderer, dirLight, hemiLight;
-      var mixers = [];
-      var stats;
-
-      var clock = new THREE.Clock();
-
-      init();
-      animate();
-
-      function init() {
-
-        var container = document.getElementById( 'container' );
-
-        camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 5000 );
-        camera.position.set( 0, 0, 250 );
-
+        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
+        //gets added to the DOM so we can actually see things happen.
+        // camera setup ========================================
+        camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 5000);
+        camera.position.set(0, 0, 250);
+        // =====================================================
         scene = new THREE.Scene();
 
         scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
         scene.fog.color.setHSL( 0.6, 0, 1 );
+        camera.lookAt(scene.position);
+        // The GPU Particle system extends THREE.Object3D, and so you can use it
+        // as you would any other scene graph component.	Particle positions will be
+        // relative to the position of the particle system, but you will probably only need one
+        // system for your whole scene
+        particleSystem = new THREE.GPUParticleSystem({
+          maxParticles: 250000
+        });
+        scene.add( particleSystem);
 
-        // LIGHTS
+        options = {
+          position: new THREE.Vector3(),
+          positionRandomness: .3,
+          velocity: new THREE.Vector3(),
+          velocityRandomness: .2,
+          color: 0xaa88ff,
+          colorRandomness: .2,
+          turbulence: .5,
+          lifetime: 2,
+          size: 10,
+          sizeRandomness: 1
+        };
+        spawnerOptions = {
+          spawnRate: 15000,
+          horizontalSpeed: 1.5,
+          verticalSpeed: 1.33,
+          timeScale: 1
+        }
+
+        // setup controls
+        controls = new THREE.TrackballControls(camera, renderer.domElement);
+        controls.rotateSpeed = 5.0;
+        controls.zoomSpeed = 2.2;
+        controls.panSpeed = 1;
+        controls.dynamicDampingFactor = 0.3;
+
+        ///////////background particles/////////////
+
+      backGroundies = new THREE.Geometry();
+      for ( i = 0; i < 2000; i ++ ) {
+        var vertex = new THREE.Vector3();
+        vertex.x = 1000 * Math.random() - 500;
+        vertex.y = 1000 * Math.random() - 500;
+        vertex.z = 1000 * Math.random() - 500;
+        backGroundies.vertices.push( vertex );
+      }
+      material = new THREE.ParticleBasicMaterial( { size: 1, sizeAttenuation: false, transparent: true } );
+      material.color.setHex( 0xffffff );
+      particles = new THREE.ParticleSystem( backGroundies, material );
+      particles.sortParticles = true;
+      scene.add( particles );
+      particlesArray.push( particles );
+
+                ///////////    lighting     /////////////
 
         hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-        hemiLight.color.setHSL( 0.6, 1, 0.6 );
-        hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+        hemiLight.color.setHSL( 0.6, 1, 0.5);
+        hemiLight.groundColor.setHSL( 0.86, 0.93, 0.1 );
         hemiLight.position.set( 0, 500, 0 );
         scene.add( hemiLight );
 
-        //
+        var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+        dirLight.position.set( -1, 0.75, 1 );
+        dirLight.position.multiplyScalar( 50);
+        dirLight.name = "dirlight";
+        // dirLight.shadowCameraVisible = true;
 
         dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
         dirLight.color.setHSL( 0.1, 1, 0.95 );
@@ -114,7 +165,7 @@
 
         var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
         var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
-        groundMat.color.setHSL( 0.095, 1, 0.75 );
+        groundMat.color.setHSL( 0, 1, 0.15 );
 
         var ground = new THREE.Mesh( groundGeo, groundMat );
         ground.rotation.x = -Math.PI/2;
@@ -128,8 +179,8 @@
         var vertexShader = document.getElementById( 'vertexShader' ).textContent;
         var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
         var uniforms = {
-          topColor:    { value: new THREE.Color( 0x0077ff ) },
-          bottomColor: { value: new THREE.Color( 0xffffff ) },
+          topColor:    { value: new THREE.Color( 0x0173ff ) },
+          bottomColor: { value: new THREE.Color( 0xff9c00 ) },
           offset:      { value: 33 },
           exponent:    { value: 0.6 }
         };
@@ -143,107 +194,84 @@
         var sky = new THREE.Mesh( skyGeo, skyMat );
         scene.add( sky );
 
-        // MODEL
 
-        var loader = new THREE.JSONLoader();
-
-        loader.load( 'models/animated/flamingo.js', function( geometry ) {
-
-          var material = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 20, morphTargets: true, vertexColors: THREE.FaceColors, shading: THREE.FlatShading } );
-          var mesh = new THREE.Mesh( geometry, material );
-
-          var s = 0.35;
-          mesh.scale.set( s, s, s );
-          mesh.position.y = 15;
-          mesh.rotation.y = -1;
-
-          mesh.castShadow = true;
-          mesh.receiveShadow = true;
-
-          scene.add( mesh );
-
-          var mixer = new THREE.AnimationMixer( mesh );
-          mixer.clipAction( geometry.animations[ 0 ] ).setDuration( 1 ).play();
-          mixers.push( mixer );
-
-        } );
-
-        // RENDERER
-
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setClearColor( scene.fog.color );
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        container.appendChild( renderer.domElement );
-
-        renderer.gammaInput = true;
-        renderer.gammaOutput = true;
-
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.renderReverseSided = false;
-
-        // STATS
-
-        stats = new Stats();
-        container.appendChild( stats.dom );
-
-        //
-
-        window.addEventListener( 'resize', onWindowResize, false );
+        window.addEventListener('resize', onWindowResize, false);
         document.addEventListener( 'keydown', onKeyDown, false );
+       }
 
-      }
+       function onWindowResize() {
+         camera.aspect = window.innerWidth / window.innerHeight;
+         camera.updateProjectionMatrix();
 
-      function onWindowResize() {
+         renderer.setSize(window.innerWidth, window.innerHeight);
+       }
 
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+       function onKeyDown ( event ) {
 
-        renderer.setSize( window.innerWidth, window.innerHeight );
+         switch ( event.keyCode ) {
 
-      }
+           case 72: // h
 
-      function onKeyDown ( event ) {
+           hemiLight.visible = !hemiLight.visible;
+           break;
 
-        switch ( event.keyCode ) {
+           case 68: // d
 
-          case 72: // h
+           dirLight.visible = !dirLight.visible;
+           break;
 
-          hemiLight.visible = !hemiLight.visible;
-          break;
+         }
 
-          case 68: // d
+       }
 
-          dirLight.visible = !dirLight.visible;
-          break;
+      function draw() {
+        requestAnimationFrame( draw );
 
+        controls.update();
+
+        try {
+          analyser.getByteFrequencyData(frequencyData)
+        }
+        catch(err) {
+          frequencyData = [0]
         }
 
-      }
 
-      //
+        freqSum = frequencyData.reduce(function(a, b) {
+          return a + b;
+        }, 0);
 
-      function animate() {
+        // console.log(frequencyData);
 
-        requestAnimationFrame( animate );
+        var delta = clock.getDelta() * spawnerOptions.timeScale;
+              			tick += delta;
+              			if (tick < 0) tick = 0;
+              			if (delta > 0) {
+                      analyser.getByteFrequencyData(frequencyData)
+                      options['positionRandomness'] = frequencyData[0] / 256
+                      options['velocityRandomness'] = frequencyData[0] / 256
+                      options['size'] = ( frequencyData[0] / 16 ) + 1
+                      options['turbulence'] = frequencyData[0] / 256
+              				options.position.x = Math.sin(tick * spawnerOptions.horizontalSpeed);
+              				options.position.y = Math.sin(tick * spawnerOptions.verticalSpeed);
+              				options.position.z = Math.sin(tick * spawnerOptions.horizontalSpeed + spawnerOptions.verticalSpeed) * 5;
+                      renderer.setClearColor(scene.fog.color);
+                      camera.lookAt(options.position);
+                      for (var x = 0; x < spawnerOptions.spawnRate * delta; x++) {
+              					// Yep, that's really it.	Spawning particles is super cheap, and once you spawn them, the rest of
+              					// their lifecycle is handled entirely on the GPU, driven by a time uniform updated below
+              					particleSystem.spawnParticle(options);
+              				}
+              			}
+              			particleSystem.update(tick);
+              			render();
+              		}
+              		function render() {
+              			renderer.render(scene, camera);
+                  }
 
-        render();
-        stats.update();
+      visualSetup();
+      draw();
 
-      }
-
-      function render() {
-
-        var delta = clock.getDelta();
-
-        for ( var i = 0; i < mixers.length; i ++ ) {
-
-          mixers[ i ].update( delta );
-
-        }
-
-        renderer.render( scene, camera );
-
-      }
-
-    </script>
+});
+</script>
