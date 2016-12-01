@@ -10,7 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require three.min.js
+//= require three.js
+//= require TrackballControls.js
+//= require GPUParticleSystem.js
 //= require OrbitControls.js
 //= require Detector.js
 //= require jquery

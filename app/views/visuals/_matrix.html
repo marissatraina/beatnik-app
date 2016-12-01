@@ -1,0 +1,99 @@
+<script id="matrix-script">
+$( document ).ready(function() {
+
+      var bg = document.body.style;
+
+      audioSrc.connect(analyser);
+      audioSrc.connect(ctx.destination);
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount)
+      analyser.getByteFrequencyData(frequencyData)
+
+      var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
+      var camera, scene, renderer, controls;
+      var particles, particle, count = 0;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+      function visualSetup() {
+        //getting correct sizing based on the browser window (more adaptable)
+        var W = window.innerWidth, H = window.innerHeight;
+
+        renderer = new THREE.CanvasRenderer();
+
+        renderer.setSize( W, H );
+
+        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
+        //gets added to the DOM so we can actually see things happen.
+        // camera setup ========================================
+        camera = new THREE.PerspectiveCamera( 75, W/H, 1, 10000 );
+        camera.position.z = 1000;
+        controls = new THREE.OrbitControls( camera );
+        // =====================================================
+        scene = new THREE.Scene();
+        particles = new Array();
+				var PI2 = Math.PI * 2;
+				var material = new THREE.SpriteCanvasMaterial( {
+					color: 0xffffff,
+					program: function ( context ) {
+						context.beginPath();
+						context.arc( 0, 0, 0.5, 0, PI2, true );
+						context.fill();
+					}
+				} );
+				var i = 0;
+				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+						particle = particles[ i ++ ] = new THREE.Sprite( material );
+            particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+						scene.add( particle );
+					}
+				}
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+       }
+
+      function draw() {
+        requestAnimationFrame( draw );
+
+        try {
+          analyser.getByteFrequencyData(frequencyData)
+        }
+        catch(err) {
+          frequencyData = [0]
+        }
+
+        freqSum = frequencyData.reduce(function(a, b) {
+          return a + b;
+        }, 0);
+
+        // console.log(frequencyData);
+
+  				render();
+          controls.update();
+  			}
+
+  			function render() {
+          // camera.lookAt( scene.position );
+  				var i = 0;
+  				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+  					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+  						particle = particles[ i++ ];
+              particle.position.x = frequencyData[iy] + ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+              particle.position.y = frequencyData[ix] + iy * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+  					}
+  				}
+  				renderer.render( scene, camera );
+                  }
+
+      visualSetup();
+      draw();
+
+});
+</script>

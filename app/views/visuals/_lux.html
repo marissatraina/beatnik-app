@@ -1,0 +1,177 @@
+<script id="space-record-script">
+$( document ).ready(function() {
+
+      var bg = document.body.style;
+
+      audioSrc.connect(analyser);
+      audioSrc.connect(ctx.destination);
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount)
+      analyser.getByteFrequencyData(frequencyData)
+
+      // three.js globals
+      var particlesArray = []
+      var camera, scene, renderer, tick = 0,  clock = new THREE.Clock(true),
+          geometry, controls, material, options, spawnerOptions, particleSystem;
+
+      function visualSetup() {
+        //getting correct sizing based on the browser window (more adaptable)
+        var W = window.innerWidth, H = window.innerHeight;
+
+        renderer = new THREE.WebGLRenderer();
+
+        renderer.setSize( W, H );
+
+        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
+        //gets added to the DOM so we can actually see things happen.
+        // camera setup ========================================
+        camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
+        camera.position.x = 10;
+        camera.position.y = 10;
+        camera.position.z = 10;
+        // =====================================================
+        scene = new THREE.Scene();
+        camera.lookAt(scene.position);
+        // The GPU Particle system extends THREE.Object3D, and so you can use it
+        // as you would any other scene graph component.	Particle positions will be
+        // relative to the position of the particle system, but you will probably only need one
+        // system for your whole scene
+        particleSystem = new THREE.GPUParticleSystem({
+          maxParticles: 250000
+        });
+        scene.add( particleSystem);
+
+        options = {
+          position: new THREE.Vector3(),
+          positionRandomness: .3,
+          velocity: new THREE.Vector3(),
+          velocityRandomness: .2,
+          color: 0xaa88ff,
+          colorRandomness: .2,
+          turbulence: .5,
+          lifetime: 2,
+          size: 10,
+          sizeRandomness: 1
+        };
+        spawnerOptions = {
+          spawnRate: 15000,
+          horizontalSpeed: 1.5,
+          verticalSpeed: 1.33,
+          timeScale: 1
+        }
+
+        // setup controls
+        controls = new THREE.TrackballControls(camera, renderer.domElement);
+        controls.rotateSpeed = 5.0;
+        controls.zoomSpeed = 2.2;
+        controls.panSpeed = 1;
+        controls.dynamicDampingFactor = 0.3;
+
+        ///////////background particles/////////////
+
+      backGroundies = new THREE.Geometry();
+      for ( i = 0; i < 5000; i ++ ) {
+        var vertex = new THREE.Vector3();
+        vertex.x = 1000 * Math.random() - 500;
+        vertex.y = 1000 * Math.random() - 500;
+        vertex.z = 1000 * Math.random() - 500;
+        backGroundies.vertices.push( vertex );
+      }
+      material = new THREE.ParticleBasicMaterial( { size: 1, sizeAttenuation: false, transparent: true } );
+      material.color.setHex( 0xffffff );
+      particles = new THREE.ParticleSystem( backGroundies, material );
+      particles.sortParticles = true;
+      scene.add( particles );
+      particlesArray.push( particles );
+
+                ///////////    lighting     /////////////
+
+        var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+        hemiLight.color.setHSL( 0.6, 0.75, 0.5 );
+        hemiLight.groundColor.setHSL( 0.095, 0.5, 0.5 );
+        hemiLight.position.set( 0, 500, 0 );
+        scene.add( hemiLight );
+
+        var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+        dirLight.position.set( -1, 0.75, 1 );
+        dirLight.position.multiplyScalar( 50);
+        dirLight.name = "dirlight";
+        // dirLight.shadowCameraVisible = true;
+
+        scene.add( dirLight );
+
+        dirLight.castShadow = true;
+        dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024*2;
+
+        var d = 300;
+
+        dirLight.shadowCameraLeft = -d;
+        dirLight.shadowCameraRight = d;
+        dirLight.shadowCameraTop = d;
+        dirLight.shadowCameraBottom = -d;
+
+        dirLight.shadowCameraFar = 3500;
+        dirLight.shadowBias = -0.0001;
+        dirLight.shadowDarkness = 0.35;
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+       }
+
+      function draw() {
+        requestAnimationFrame( draw );
+
+        controls.update();
+
+        try {
+          analyser.getByteFrequencyData(frequencyData)
+        }
+        catch(err) {
+          frequencyData = [0]
+        }
+
+
+        freqSum = frequencyData.reduce(function(a, b) {
+          return a + b;
+        }, 0);
+
+        // console.log(frequencyData);
+
+        var delta = clock.getDelta() * spawnerOptions.timeScale;
+              			tick += delta;
+              			if (tick < 0) tick = 0;
+              			if (delta > 0) {
+                      analyser.getByteFrequencyData(frequencyData)
+                      options['horizontalSpeed'] = frequencyData[0]
+                      options['size'] = (frequencyData[50] / 10) + 1
+                      options['verticalSpeed'] = frequencyData[100]
+                      options['sizeRandomness'] = frequencyData[200]
+                      options['turbulence'] = frequencyData[300]
+              				options.position.x = Math.sin(tick * spawnerOptions.horizontalSpeed);
+              				options.position.y = Math.sin(tick * spawnerOptions.verticalSpeed);
+              				options.position.z = Math.sin(tick * spawnerOptions.horizontalSpeed + spawnerOptions.verticalSpeed) * 5;
+                      renderer.setClearColor(frequencyData[0], 1.0);
+                      camera.lookAt(options.position);
+                      for (var x = 0; x < spawnerOptions.spawnRate * delta; x++) {
+              					// Yep, that's really it.	Spawning particles is super cheap, and once you spawn them, the rest of
+              					// their lifecycle is handled entirely on the GPU, driven by a time uniform updated below
+              					particleSystem.spawnParticle(options);
+              				}
+              			}
+              			particleSystem.update(tick);
+              			render();
+              		}
+              		function render() {
+              			renderer.render(scene, camera);
+                  }
+
+      visualSetup();
+      draw();
+
+});
+</script>
