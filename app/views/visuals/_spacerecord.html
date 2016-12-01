@@ -1,147 +1,225 @@
-<script id="space-record-script">
-$( document ).ready(function() {
-
-      var bg = document.body.style;
-
-      audioSrc.connect(analyser);
-      audioSrc.connect(ctx.destination);
-      var frequencyData = new Uint8Array(analyser.frequencyBinCount)
-      analyser.getByteFrequencyData(frequencyData)
-
-      // three.js globals
-      var objectsArray = []
-      var particlesArray = []
-      var camera, scene, renderer;
-      var geometry, controls, material, mesh;
-
-      function visualSetup() {
-        //getting correct sizing based on the browser window (more adaptable)
-        var W = window.innerWidth, H = window.innerHeight;
-
-        renderer = new THREE.WebGLRenderer();
-
-        renderer.setSize( W, H );
-
-        $("div#pseudo-body").append( renderer.domElement ); //the renderer's dom friendly copy
-        //gets added to the DOM so we can actually see things happen.
-        // camera setup ========================================
-        camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
-        camera.position.z = 100;
-        // =====================================================
-        scene = new THREE.Scene();
-
-        geometry = new THREE.CubeGeometry( 25, 25, 25 );
-
-        // this is all we need to be able to click and move camera
-        controls = new THREE.OrbitControls( camera );
-        // =======================================================
-
-        for ( var i = 0; i < 255; i ++ ) {
-          var radius   = i,
-              segments = 64,
-              geometry = new THREE.CircleGeometry( radius, segments );
-              material = new THREE.LineBasicMaterial({color: "rgb(255, " + i + ", 0)"}),
-              circle = new THREE.Line(geometry, material);
-        scene.add(circle);
-        geometry.vertices.shift();
-        scene.add(circle);
-        objectsArray.push( circle )
-        }
-
-                ///////////    lighting     /////////////
-
-        var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-        hemiLight.color.setHSL( 0.6, 0.75, 0.5 );
-        hemiLight.groundColor.setHSL( 0.095, 0.5, 0.5 );
-        hemiLight.position.set( 0, 500, 0 );
-        scene.add( hemiLight );
-
-        var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-        dirLight.position.set( -1, 0.75, 1 );
-        dirLight.position.multiplyScalar( 50);
-        dirLight.name = "dirlight";
-        // dirLight.shadowCameraVisible = true;
-
-        scene.add( dirLight );
-
-        dirLight.castShadow = true;
-        dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024*2;
-
-        var d = 300;
-
-        dirLight.shadowCameraLeft = -d;
-        dirLight.shadowCameraRight = d;
-        dirLight.shadowCameraTop = d;
-        dirLight.shadowCameraBottom = -d;
-
-        dirLight.shadowCameraFar = 3500;
-        dirLight.shadowBias = -0.0001;
-        dirLight.shadowDarkness = 0.35;
-
-                ///////////background particles/////////////
-
-        backGroundies = new THREE.Geometry();
-        for ( i = 0; i < 5000; i ++ ) {
-          var vertex = new THREE.Vector3();
-          vertex.x = 1000 * Math.random() - 500;
-          vertex.y = 1000 * Math.random() - 500;
-          vertex.z = 1000 * Math.random() - 500;
-          backGroundies.vertices.push( vertex );
-        }
-        material = new THREE.ParticleBasicMaterial( { size: 1, sizeAttenuation: false, transparent: true } );
-        material.color.setHex( 0x99FFFF );
-        particles = new THREE.ParticleSystem( backGroundies, material );
-        particles.sortParticles = true;
-        scene.add( particles );
-        particlesArray.push( particles );
-
-        window.addEventListener('resize', onWindowResize, false);
-
-        function onWindowResize() {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-       }
+<body>
+  <div id="container"></div>
+</body>
 
 
-      function draw() {
-        requestAnimationFrame( draw );
-
-        controls.update();
-
-        try {
-          analyser.getByteFrequencyData(frequencyData)
-        }
-        catch(err) {
-          frequencyData = [0]
-        }
 
 
-        freqSum = frequencyData.reduce(function(a, b) {
-          return a + b;
-        }, 0);
+<script src="http://threejs.org/build/three.min.js"></script>
 
-        // console.log(frequencyData);
+<script src="http://threejs.org/examples/js/Detector.js"></script>
 
-        for ( var i = 0; i < 255; i ++ ) {
-          bg.background = ('#000000')
-           camera.position.z = 150;
-           objectsArray[i].position.x = (frequencyData[i * 2] / 64)
-           objectsArray[i].position.y = (frequencyData[i * 2] / 64)
-           objectsArray[i].position.z = (frequencyData[i * 2] / 64)
-        }
+<script type="x-shader/x-vertex" id="vertexShader">
 
-        camera.position.x = Math.cos( Date.now() * 0.0001 ) * 100;
-        camera.position.y = Math.sin( Date.now() * 0.0001 ) * 100;
 
-        renderer.render( scene, camera );
+
+    varying vec3 vWorldPosition;
+
+    void main() {
+
+      vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+      vWorldPosition = worldPosition.xyz;
+
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+    }
+
+  </script>
+
+  <script type="x-shader/x-fragment" id="fragmentShader">
+
+    uniform vec3 topColor;
+    uniform vec3 bottomColor;
+    uniform float offset;
+    uniform float exponent;
+
+    varying vec3 vWorldPosition;
+
+    void main() {
+
+      float h = normalize( vWorldPosition + offset ).y;
+      gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+
+    }
+
+  </script>
+
+  <script>
+
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+    var camera, scene, renderer, dirLight, hemiLight;
+    var mixers = [];
+
+    var clock = new THREE.Clock();
+
+    init();
+    animate();
+
+    function init() {
+
+      var container = document.getElementById( 'container' );
+
+      camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 5000 );
+      camera.position.set( 0, 0, 250 );
+
+      scene = new THREE.Scene();
+
+      scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
+      scene.fog.color.setHSL( 0.6, 0, 1 );
+
+      // LIGHTS
+
+      hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+      hemiLight.color.setHSL( 0.6, 1, 0.5);
+      hemiLight.groundColor.setHSL( 0.86, 0.93, 0.1 );
+      hemiLight.position.set( 0, 500, 0 );
+      scene.add( hemiLight );
+
+      //
+
+      dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+      dirLight.color.setHSL( 0.1, 1, 0.95 );
+      dirLight.position.set( -1, 1.75, 1 );
+      dirLight.position.multiplyScalar( 50 );
+      scene.add( dirLight );
+
+      dirLight.castShadow = true;
+
+      dirLight.shadow.mapSize.width = 2048;
+      dirLight.shadow.mapSize.height = 2048;
+
+      var d = 50;
+
+      dirLight.shadow.camera.left = -d;
+      dirLight.shadow.camera.right = d;
+      dirLight.shadow.camera.top = d;
+      dirLight.shadow.camera.bottom = -d;
+
+      dirLight.shadow.camera.far = 3500;
+      dirLight.shadow.bias = -0.0001;
+
+
+      var particlesArray = [];
+      backGroundies = new THREE.Geometry();
+      for ( i = 0; i < 2000; i ++ ) {
+        var vertex = new THREE.Vector3();
+        vertex.x = 1000 * Math.random() - 500;
+        vertex.y = 1000 * Math.random() - 500;
+        vertex.z = 1000 * Math.random() - 500;
+        backGroundies.vertices.push( vertex );
+      }
+      material = new THREE.ParticleBasicMaterial( { size: 1, sizeAttenuation: false, transparent: true } );
+      material.color.setHex( 0x99FFFF );
+      particles = new THREE.ParticleSystem( backGroundies, material );
+      particles.sortParticles = true;
+      scene.add( particles );
+      particlesArray.push( particles );
+
+      // GROUND
+
+      var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
+      var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
+      groundMat.color.setHSL( 0, 1, 0.15 );
+
+      var ground = new THREE.Mesh( groundGeo, groundMat );
+      ground.rotation.x = -Math.PI/2;
+      ground.position.y = -33;
+      scene.add( ground );
+
+      ground.receiveShadow = true;
+
+      // SKYDOME
+
+      var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+      var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+      var uniforms = {
+        topColor:    { value: new THREE.Color( 0x0173ff ) },
+        bottomColor: { value: new THREE.Color( 0xff9c00 ) },
+        offset:      { value: 33 },
+        exponent:    { value: 0.6 }
+      };
+      uniforms.topColor.value.copy( hemiLight.color );
+
+      scene.fog.color.copy( uniforms.bottomColor.value );
+
+      var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+      var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
+
+      var sky = new THREE.Mesh( skyGeo, skyMat );
+      scene.add( sky );
+
+
+
+      // RENDERER
+
+      renderer = new THREE.WebGLRenderer( { antialias: true } );
+      renderer.setClearColor( scene.fog.color );
+      renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      container.appendChild( renderer.domElement );
+
+      renderer.gammaInput = true;
+      renderer.gammaOutput = true;
+
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.renderReverseSided = false;
+
+
+      window.addEventListener( 'resize', onWindowResize, false );
+      document.addEventListener( 'keydown', onKeyDown, false );
+
+    }
+
+    function onWindowResize() {
+
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize( window.innerWidth, window.innerHeight );
+
+    }
+
+    function onKeyDown ( event ) {
+
+      switch ( event.keyCode ) {
+
+        case 72: // h
+
+        hemiLight.visible = !hemiLight.visible;
+        break;
+
+        case 68: // d
+
+        dirLight.visible = !dirLight.visible;
+        break;
 
       }
 
-      visualSetup();
-      draw();
+    }
 
-});
-</script>
+    //
+
+    function animate() {
+
+      requestAnimationFrame( animate );
+
+      render();
+
+    }
+
+    function render() {
+
+      var delta = clock.getDelta();
+
+      for ( var i = 0; i < mixers.length; i ++ ) {
+
+        mixers[ i ].update( delta );
+
+      }
+
+      renderer.render( scene, camera );
+
+    }
+
+  </script>

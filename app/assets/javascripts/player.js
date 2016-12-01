@@ -20,8 +20,4 @@ $(document).ready(function() {
 	$("button#styles-button").click(function() {
 		$styles.toggleClass("hidden");
 	});
-
-	$('div#sidebar').scroll(function() {
-    didScroll = true;
-	});
 });
