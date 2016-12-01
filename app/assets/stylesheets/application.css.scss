@@ -103,6 +103,7 @@ img.user-photo-img {
   padding-left: 5px;
   padding-top: 0px;
   width: 80%;
+  text-overflow: ellipsis;
 }
 
 .user-name h1 {
@@ -182,6 +183,7 @@ td.user-playlist {
   font-size: 110%;
   font-weight: 300;
   padding-left: 2vh;
+  text-overflow: ellipsis;
 }
 
 .user-spotify-player {
