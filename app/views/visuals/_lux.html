@@ -67,7 +67,7 @@ $( document ).ready(function() {
         //gets added to the DOM so we can actually see things happen.
         // camera setup ========================================
         camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 5000);
-        camera.position.set(0, 0, 250);
+        camera.position.set(0, 0, 10);
         // =====================================================
         scene = new THREE.Scene();
 
@@ -87,19 +87,19 @@ $( document ).ready(function() {
           position: new THREE.Vector3(),
           positionRandomness: .3,
           velocity: new THREE.Vector3(),
-          velocityRandomness: .2,
+          velocityRandomness: .1,
           color: 0xaa88ff,
           colorRandomness: .2,
           turbulence: .5,
           lifetime: 2,
-          size: 10,
+          size: 5,
           sizeRandomness: 1
         };
         spawnerOptions = {
-          spawnRate: 15000,
+          spawnRate: 18000,
           horizontalSpeed: 1.5,
-          verticalSpeed: 1.33,
-          timeScale: 1
+          verticalSpeed: 1.25,
+          timeScale: 0.5
         }
 
         // setup controls
@@ -109,7 +109,7 @@ $( document ).ready(function() {
         controls.panSpeed = 1;
         controls.dynamicDampingFactor = 0.3;
 
-        ///////////background particles/////////////
+    ///////////background particles/////////////
 
       backGroundies = new THREE.Geometry();
       for ( i = 0; i < 2000; i ++ ) {
@@ -126,7 +126,8 @@ $( document ).ready(function() {
       scene.add( particles );
       particlesArray.push( particles );
 
-                ///////////    lighting     /////////////
+
+    ///////////    lighting     /////////////
 
         hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
         hemiLight.color.setHSL( 0.6, 1, 0.5);
@@ -250,7 +251,7 @@ $( document ).ready(function() {
                       analyser.getByteFrequencyData(frequencyData)
                       options['positionRandomness'] = frequencyData[0] / 256
                       options['velocityRandomness'] = frequencyData[0] / 256
-                      options['size'] = ( frequencyData[0] / 16 ) + 1
+                      options['size'] = ( frequencyData[0] / 16 ) + 10
                       options['turbulence'] = frequencyData[0] / 256
               				options.position.x = Math.sin(tick * spawnerOptions.horizontalSpeed);
               				options.position.y = Math.sin(tick * spawnerOptions.verticalSpeed);
