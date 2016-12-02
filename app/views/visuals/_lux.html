@@ -2,10 +2,6 @@
   <body>
 
     <div id="container"></div>
-    <div id="info">
-      <a href="http://threejs.org" target="_blank">three.js</a> - webgl hemisphere light example -
-      flamingo by <a href="http://mirada.com/">mirada</a> from <a href="http://ro.me">rome</a><br/>
-    </div>
   </body>
 
 
@@ -58,9 +54,96 @@
 
       if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-      var camera, scene, renderer, dirLight, hemiLight;
-      var mixers = [];
+      var camera, scene, renderer, dirLight, hemiLight, splineCamera, cameraHelper, cameraEye;
+      var text, plane;
+      var targetRotation = 0;
+      var targetRotationOnMouseDown = 0;
+      var mouseX = 0;
+      var mouseXOnMouseDown = 0;
+      var windowHalfX = window.innerWidth / 2;
+      var windowHalfY = window.innerHeight / 2;
+      var binormal = new THREE.Vector3();
+      var normal = new THREE.Vector3();
       var stats;
+
+      var pipeSpline = new THREE.CatmullRomCurve3( [
+        new THREE.Vector3( 0, 10, -10 ), new THREE.Vector3( 10, 0, -10 ),
+        new THREE.Vector3( 20, 0, 0 ), new THREE.Vector3( 30, 0, 10 ),
+        new THREE.Vector3( 30, 0, 20 ), new THREE.Vector3( 20, 0, 30 ),
+        new THREE.Vector3( 10, 0, 30 ), new THREE.Vector3( 0, 0, 30 ),
+        new THREE.Vector3( -10, 10, 30 ), new THREE.Vector3( -10, 20, 30 ),
+        new THREE.Vector3( 0, 30, 30 ), new THREE.Vector3( 10, 30, 30 ),
+        new THREE.Vector3( 20, 30, 15 ), new THREE.Vector3( 10, 30, 10 ),
+        new THREE.Vector3( 0, 30, 10 ), new THREE.Vector3( -10, 20, 10 ),
+        new THREE.Vector3( -10, 10, 10 ), new THREE.Vector3( 0, 0, 10 ),
+        new THREE.Vector3( 10, -10, 10 ), new THREE.Vector3( 20, -15, 10 ),
+        new THREE.Vector3( 30, -15, 10 ), new THREE.Vector3( 40, -15, 10 ),
+        new THREE.Vector3( 50, -15, 10 ), new THREE.Vector3( 60, 0, 10 ),
+        new THREE.Vector3( 70, 0, 0 ), new THREE.Vector3( 80, 0, 0 ),
+        new THREE.Vector3( 90, 0, 0 ), new THREE.Vector3( 100, 0, 0 )
+      ] );
+
+      var sampleClosedSpline = new THREE.CatmullRomCurve3( [
+        new THREE.Vector3( 0, -40, -40 ),
+        new THREE.Vector3( 0, 40, -40 ),
+        new THREE.Vector3( 0, 140, -40 ),
+        new THREE.Vector3( 0, 40, 40 ),
+        new THREE.Vector3( 0, -40, 40 ),
+      ] );
+
+      var spline = TorusKnot: new THREE.Curves.TorusKnot( 20 );
+
+      var closed2 = true;
+      var parent;
+      var tube, tubeMesh;
+      var animation = false, lookAhead = false;
+      var scale;
+      var showCameraHelper = false;
+
+
+		function addTube() {
+			var value = document.getElementById( 'dropdown' ).value;
+			var segments = parseInt( document.getElementById( 'segments' ).value );
+			closed2 = document.getElementById( 'closed' ).checked;
+			var radiusSegments = parseInt( document.getElementById( 'radiusSegments' ).value );
+			if ( tubeMesh !== undefined ) parent.remove( tubeMesh );
+			extrudePath = splines[ value ];
+			tube = new THREE.TubeBufferGeometry( extrudePath, segments, 2, radiusSegments, closed2 );
+			addGeometry( tube, 0xff00ff );
+			setScale();
+		}
+		function setScale() {
+			scale = parseInt( document.getElementById( 'scale' ).value );
+			tubeMesh.scale.set( scale, scale, scale );
+		}
+		function addGeometry( geometry, color ) {
+			// 3d shape
+			tubeMesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [
+				new THREE.MeshLambertMaterial( {
+					color: color
+				} ),
+				new THREE.MeshBasicMaterial( {
+					color: 0x000000,
+					opacity: 0.3,
+					wireframe: true,
+					transparent: true
+			} ) ] );
+			parent.add( tubeMesh );
+		}
+		function animateCamera( toggle ) {
+			if ( toggle === true ) {
+				animation = animation === false;
+				document.getElementById( 'animation' ).value = 'Camera Spline Animation View: ' + ( animation ? 'ON' : 'OFF' );
+			}
+			lookAhead = document.getElementById( 'lookAhead' ).checked;
+			showCameraHelper = document.getElementById( 'cameraHelper' ).checked;
+			cameraHelper.visible = showCameraHelper;
+			cameraEye.visible = showCameraHelper;
+		}
+
+    init();
+    animate();
+
 
       var clock = new THREE.Clock();
 
@@ -78,6 +161,20 @@
 
         scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
         scene.fog.color.setHSL( 0.6, 0, 1 );
+
+
+			  parent = new THREE.Object3D();
+		 	  scene.add( parent );
+			  splineCamera = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 1000 );
+			 parent.add( splineCamera );
+			    cameraHelper = new THREE.CameraHelper( splineCamera );
+			         scene.add( cameraHelper );
+			addTube();
+
+      cameraEye = new THREE.Mesh( new THREE.SphereGeometry( 5 ), new THREE.MeshBasicMaterial( { color: 0xdddddd } ) );
+parent.add( cameraEye );
+cameraHelper.visible = showCameraHelper;
+cameraEye.visible = showCameraHelper;
 
         // LIGHTS
 
@@ -142,31 +239,6 @@
 
         var sky = new THREE.Mesh( skyGeo, skyMat );
         scene.add( sky );
-
-        // MODEL
-
-        var loader = new THREE.JSONLoader();
-
-        loader.load( 'models/animated/flamingo.js', function( geometry ) {
-
-          var material = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0xffffff, shininess: 20, morphTargets: true, vertexColors: THREE.FaceColors, shading: THREE.FlatShading } );
-          var mesh = new THREE.Mesh( geometry, material );
-
-          var s = 0.35;
-          mesh.scale.set( s, s, s );
-          mesh.position.y = 15;
-          mesh.rotation.y = -1;
-
-          mesh.castShadow = true;
-          mesh.receiveShadow = true;
-
-          scene.add( mesh );
-
-          var mixer = new THREE.AnimationMixer( mesh );
-          mixer.clipAction( geometry.animations[ 0 ] ).setDuration( 1 ).play();
-          mixers.push( mixer );
-
-        } );
 
         // RENDERER
 
@@ -234,16 +306,35 @@
 
       function render() {
 
-        var delta = clock.getDelta();
 
-        for ( var i = 0; i < mixers.length; i ++ ) {
-
-          mixers[ i ].update( delta );
-
-        }
-
-        renderer.render( scene, camera );
-
-      }
+			// Try Animate Camera Along Spline
+			var time = Date.now();
+			var looptime = 20 * 1000;
+			var t = ( time % looptime ) / looptime;
+			var pos = tube.parameters.path.getPointAt( t );
+			pos.multiplyScalar( scale );
+			// interpolation
+			var segments = tube.tangents.length;
+			var pickt = t * segments;
+			var pick = Math.floor( pickt );
+			var pickNext = ( pick + 1 ) % segments;
+			binormal.subVectors( tube.binormals[ pickNext ], tube.binormals[ pick ] );
+			binormal.multiplyScalar( pickt - pick ).add( tube.binormals[ pick ] );
+			var dir = tube.parameters.path.getTangentAt( t );
+			var offset = 15;
+			normal.copy( binormal ).cross( dir );
+			// We move on a offset on its binormal
+			pos.add( normal.clone().multiplyScalar( offset ) );
+			splineCamera.position.copy( pos );
+			cameraEye.position.copy( pos );
+			// Using arclength for stablization in look ahead.
+			var lookAt = tube.parameters.path.getPointAt( ( t + 30 / tube.parameters.path.getLength() ) % 1 ).multiplyScalar( scale );
+			// Camera Orientation 2 - up orientation via normal
+			if ( !lookAhead ) lookAt.copy( pos ).add( dir );
+			splineCamera.matrix.lookAt(splineCamera.position, lookAt, normal);
+			splineCamera.rotation.setFromRotationMatrix( splineCamera.matrix, splineCamera.rotation.order );
+			cameraHelper.update();
+			renderer.render( scene, animation === true ? splineCamera : camera );
+		}
 
     </script>
